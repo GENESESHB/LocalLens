@@ -27,12 +27,19 @@ What you need to run the website:
    git clone https://github.com/GENESESHB/LocalLens.git
 ```
 
-1. Navigate to the project directory:
+2. Navigate to the project directory:
 ```bash
    cd LocalLens
 ```
 
-1. Use Docker Compose to build and start the Website in dev mode:
+2. Use Docker Compose to build and start the Website in dev mode:
 ```bash
    docker-compose docker-compose.local.yml up --build
 ```
+
+### Usage
+
+After running the containers, the web application should be accessible via:
+
+Frontend: **http://localhost:3000**
+Backend: **http://localhost:8000**
