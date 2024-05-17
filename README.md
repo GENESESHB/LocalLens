@@ -32,7 +32,7 @@ What you need to run the website:
    cd LocalLens
 ```
 
-1. Use Docker Compose to build and start the Website:
+1. Use Docker Compose to build and start the Website in dev mode:
 ```bash
    docker-compose docker-compose.local.yml up --build
 ```
