@@ -42,4 +42,5 @@ What you need to run the website:
 After running the containers, the web application should be accessible via:
 
 Frontend: **http://localhost:3000**
+
 Backend: **http://localhost:8000**
