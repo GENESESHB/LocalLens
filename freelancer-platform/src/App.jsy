@@ -1,0 +1,29 @@
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Privacy from './pages/Privacy';
+import PDetails from './pages/PDetails';
+import ContactUs from './pages/ContactUs';
+
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/Register" component={Register} />
+        <Route path="/Login" component={Login} />
+        <Route path="/ContactUs" component={ContactUs} />
+        <Route path="/PDetails" component={PDetails} />
+        <Route path="/Privacy" component={Privacy} />
+      </Switch>
+    </Router>
+  );
+}
+
+export default App;
+
