@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=locallens_api
+POSTGRES_USER=sDutVZdRFJkKNakPzgFcVUyhinQNwPPa
+POSTGRES_PASSWORD=A8Q0ndVorukM7ZwDbcl4lAQeyKv2ZJZFMslEZ0fv47zA5SJYU2iqTib1G46KDmVz

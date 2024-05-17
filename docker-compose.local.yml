@@ -1,0 +1,71 @@
+volumes:
+  locallens_api_local_postgres_data: {}
+  locallens_api_local_postgres_data_backups: {}
+  locallens_api_local_redis_data: {}
+
+services:
+  django: &django
+    build:
+      context: ./locallens_api/.
+      dockerfile: ./compose/local/django/Dockerfile
+    image: locallens_api_local_django
+    container_name: locallens_api_local_django
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./locallens_api/.:/app:z
+    env_file:
+      - ./locallens_api/.envs/.local/.django
+      - ./locallens_api/.envs/.local/.postgres
+    ports:
+      - '8000:8000'
+    command: /start
+
+  postgres:
+    build:
+      context: ./locallens_api/.
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: locallens_api_production_postgres
+    container_name: locallens_api_local_postgres
+    volumes:
+      - locallens_api_local_postgres_data:/var/lib/postgresql/data
+      - locallens_api_local_postgres_data_backups:/backups
+    env_file:
+      - ./locallens_api/.envs/.local/.postgres
+
+  redis:
+    image: docker.io/redis:6
+    container_name: locallens_api_local_redis
+    
+    volumes:
+      - locallens_api_local_redis_data:/data
+    
+
+  celeryworker:
+    <<: *django
+    image: locallens_api_local_celeryworker
+    container_name: locallens_api_local_celeryworker
+    depends_on:
+      - redis
+      - postgres
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: locallens_api_local_celerybeat
+    container_name: locallens_api_local_celerybeat
+    depends_on:
+      - redis
+      - postgres
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: locallens_api_local_flower
+    container_name: locallens_api_local_flower
+    ports:
+      - '5555:5555'
+    command: /start-flower
