@@ -37,10 +37,10 @@ services:
   redis:
     image: docker.io/redis:6
     container_name: locallens_api_local_redis
-    
+
     volumes:
       - locallens_api_local_redis_data:/data
-    
+
 
   celeryworker:
     <<: *django
