@@ -1,0 +1,83 @@
+.login-register-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  text-align: center; /* Center align the content */
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: block; /* Ensures block-level centering */
+  margin-left: auto;
+  margin-right: auto; /* Center the input horizontally */
+}
+
+button {
+  width: 40%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: block; /* Ensures block-level centering */
+  margin-left: auto;
+  margin-right: auto; /* Center the button horizontally */
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48%;
+  padding: 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.google-button {
+  background-color: #db4437;
+}
+
+.facebook-button {
+  background-color: #3b5998;
+}
+
+.social-button img {
+  margin-right: 8px;
+  width: 20px;
+  height: 20px;
+}
+
+.freelancer-button {
+  display: block;
+  width: 40%;
+  padding: 10px;
+  background-color: #28a745;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  margin-left: auto;
+  margin-right: auto; /* Center the button horizontally */
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 768px) {
+  .login-register-container {
+    padding: 10px;
+  }
+}
+

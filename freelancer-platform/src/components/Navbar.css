@@ -1,12 +1,11 @@
-
-
 .navbar {
-  background-color: #333;
+  background-color: none;
   padding: 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
+  border-bottom: 1px solid #ccc;
 }
 
 .navbar-container {
@@ -17,7 +16,7 @@
 }
 
 .navbar-logo a {
-  color: white;
+  color: #0CC2E6;
   font-size: 1.5em;
   text-decoration: none;
   margin-right: 12em;
@@ -33,6 +32,7 @@
   margin: 0;
   padding: 0;
   display: flex;
+
   justify-content: flex-end; /* Align items to the right */
 }
 
@@ -41,7 +41,7 @@
 }
 
 .navbar-menu a {
-  color: white;
+  color: #E54463;
   text-decoration: none;
   font-size: 1em;
   display: flex;
@@ -58,8 +58,8 @@
 
 .navbar-toggle {
   display: none;
-  font-size: 1.5em;
-  color: white;
+  font-size: 2em;
+  color: #E54463;
   cursor: pointer;
 }
 
@@ -69,12 +69,17 @@
     position: absolute;
     top: 100%;
     left: 0;
+    right: 0;
     width: 100%;
-    background-color: #333;
+    background-color: white;
     flex-direction: column;
     align-items: flex-start;
     display: none;
   }
+  
+  .navbar {
+    width: 100%;
+    }
 
   .navbar-menu.active {
     display: flex;
@@ -82,6 +87,7 @@
 
   .navbar-toggle {
     display: block;
+    width: 100%;
   }
 
   .navbar-menu ul {

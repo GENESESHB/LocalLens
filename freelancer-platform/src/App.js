@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import Register from './pages/Login-Register';
+import LoginRegister from './pages/LoginRegister'; // Updated import
 import Login from './pages/Login';
 import Privacy from './pages/Privacy';
 import PDetails from './pages/PDetails';
@@ -22,7 +22,7 @@ function App() {
           <Route path="/Experience" element={<Experience />} />
           <Route path="/Products" element={<Products />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/Register" element={<Register />} />
+          <Route path="/Login-Register" element={<LoginRegister />} /> {/* Updated component reference */}
           <Route path="/Login" element={<Login />} />
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/PDetails" element={<PDetails />} />

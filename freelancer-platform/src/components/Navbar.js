@@ -16,7 +16,7 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <Link to="/">MyApp</Link>
+          <Link to="/">LocalLens</Link>
         </div>
         <div className={`navbar-menu ${isOpen ? 'active' : ''}`}>
           <ul>
