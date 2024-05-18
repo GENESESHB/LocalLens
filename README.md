@@ -34,7 +34,7 @@ What you need to run the website:
 
 2. Use Docker Compose to build and start the Website in dev mode:
 ```bash
-   docker-compose docker-compose.local.yml up --build
+   docker-compose -f docker-compose.local.yml up --build
 ```
 
 ### Usage
