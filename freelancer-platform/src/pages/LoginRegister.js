@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginRegister.css';
-import googleLogo from '../assets/google-logo.png'; // Adjust the path if necessary
-import facebookLogo from '../assets/facebook-logo.png'; // Adjust the path if necessary
+import googleLogo from './assets/google-logo.png'; // Adjust the path if necessary
+import facebookLogo from './assets/facebook-logo.png'; // Adjust the path if necessary
 
 function LoginRegister() {
   const [email, setEmail] = useState('');
