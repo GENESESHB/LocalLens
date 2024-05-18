@@ -4,12 +4,30 @@ volumes:
   locallens_api_local_redis_data: {}
 
 services:
+  react:
+    container_name: locallens-front
+    build:
+      context: ./freelancer-platform/.
+      dockerfile: ./compose/local/react/Dockerfile
+      # network: host
+    volumes:
+      - ./freelancer-platform/src:/app/src
+      - ./freelancer-platform/public:/app/public
+    ports:
+      - '3000:3000'
+    networks:
+      - locallens_network
+    depends_on:
+      - django
+
   django: &django
     build:
       context: ./locallens_api/.
       dockerfile: ./compose/local/django/Dockerfile
     image: locallens_api_local_django
     container_name: locallens_api_local_django
+    networks:
+      - locallens_network
     depends_on:
       - postgres
       - redis
@@ -28,6 +46,8 @@ services:
       dockerfile: ./compose/production/postgres/Dockerfile
     image: locallens_api_production_postgres
     container_name: locallens_api_local_postgres
+    networks:
+      - locallens_network
     volumes:
       - locallens_api_local_postgres_data:/var/lib/postgresql/data
       - locallens_api_local_postgres_data_backups:/backups
@@ -37,7 +57,8 @@ services:
   redis:
     image: docker.io/redis:6
     container_name: locallens_api_local_redis
-
+    networks:
+      - locallens_network
     volumes:
       - locallens_api_local_redis_data:/data
 
@@ -69,3 +90,7 @@ services:
     ports:
       - '5555:5555'
     command: /start-flower
+
+
+networks:
+  locallens_network:
