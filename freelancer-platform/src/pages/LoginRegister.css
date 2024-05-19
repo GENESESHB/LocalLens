@@ -1,8 +1,12 @@
 .login-register-container {
   max-width: 600px;
   margin: auto;
+  margin-top: 40px;
   padding: 20px;
   text-align: center; /* Center align the content */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(201, 57, 57, 0.3);
 }
 
 form {
@@ -11,6 +15,7 @@ form {
 
 input {
   width: 60%;
+  border-radius: 20px;
   padding: 10px;
   margin-bottom: 10px;
   display: block; /* Ensures block-level centering */
@@ -25,6 +30,7 @@ button {
   background-color: #007bff;
   color: #fff;
   border: none;
+  border-radius: 20px;
   cursor: pointer;
   display: block; /* Ensures block-level centering */
   margin-left: auto;
@@ -33,6 +39,7 @@ button {
 
 .social-buttons {
   display: flex;
+  border-radius: 20px;
   justify-content: space-between;
   margin-bottom: 10px;
 }
@@ -42,6 +49,7 @@ button {
   align-items: center;
   justify-content: center;
   width: 48%;
+  border-radius: 20px;
   padding: 10px;
   color: #fff;
   border: none;
@@ -49,10 +57,12 @@ button {
 }
 
 .google-button {
+  border-radius: 20px;
   background-color: #db4437;
 }
 
 .facebook-button {
+  border-radius: 20px;
   background-color: #3b5998;
 }
 
@@ -66,6 +76,7 @@ button {
   display: block;
   width: 40%;
   padding: 10px;
+  border-radius: 20px;
   background-color: #28a745;
   color: #fff;
   text-align: center;
@@ -78,6 +89,10 @@ button {
 @media screen and (max-width: 768px) {
   .login-register-container {
     padding: 10px;
+  }
+
+  .input {
+    width: 100%;
   }
 }
 

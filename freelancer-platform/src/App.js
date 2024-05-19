@@ -6,6 +6,7 @@ import Profile from './pages/Profile';
 import LoginRegister from './pages/LoginRegister'; // Updated import
 import Login from './pages/Login';
 import Privacy from './pages/Privacy';
+import RegisterFreelancer from './pages/RegisterFreelancer';
 import PDetails from './pages/PDetails';
 import Products from './pages/Products';
 import Experience from './pages/Experience';
@@ -29,6 +30,7 @@ function App() {
           <Route path="/Privacy" element={<Privacy />} />
           <Route path="/Products" element={<Privacy />} />
           <Route path="/Experience" element={<Experience />} />
+          <Route path="/RegisterFreelancer" component={RegisterFreelancer} />
         </Routes>
       </div>
     </Router>

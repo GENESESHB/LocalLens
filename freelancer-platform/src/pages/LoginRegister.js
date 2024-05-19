@@ -71,10 +71,9 @@ function LoginRegister() {
           <img src={facebookLogo} alt="Facebook logo" /> Login with Facebook
         </button>
       </div>
-      
-      <button className="freelancer-button" onClick={() => window.location.href = '/register'}>
-        Register as Freelancer
-      </button>
+        <button className="freelancer-button" onClick={() => window.location.href = '/RegisterFreelancer'}>
+          Register as Freelancer
+        </button>
     </div>
   );
 }
