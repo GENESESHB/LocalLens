@@ -44,3 +44,10 @@ After running the containers, the web application should be accessible via:
 Frontend: **http://localhost:3000**
 
 Backend: **http://localhost:8000**
+
+
+### Create super user
+
+```bash
+   docker-compose -f docker-compose.local.yml run --rm django python3 manage.py createsuperuser
+```
