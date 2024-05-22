@@ -8,6 +8,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from locallens_api.users.models import User
 
+from .permissions import IsSuperuserOrSelf
 from .serializers import UserSerializer
 
 
@@ -15,6 +16,7 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = "pk"
+    permission_classes = [IsSuperuserOrSelf]
 
     def get_queryset(self, *args, **kwargs):
         assert isinstance(self.request.user.id, int)
