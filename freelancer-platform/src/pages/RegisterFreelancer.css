@@ -1,0 +1,83 @@
+.RF {
+  max-width: 600px;
+  margin: auto;
+  margin-top: 80px;
+  padding: 20px;
+  text-align: center; /* Center align the content */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(201, 57, 57, 0.3);
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+select {
+  border: 1px solid #ccc;
+  width: 64%;
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: block; /* Ensures block-level centering */
+  margin-left: auto;
+  margin-right: auto; /* Center the input horizontally */
+}
+
+input {
+  border: 1px solid #ccc;
+  width: 60%;
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: block; /* Ensures block-level centering */
+  margin-left: auto;
+  margin-right: auto; /* Center the input horizontally */
+}
+
+button {
+  width: 40%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: block; /* Ensures block-level centering */
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto; /* Center the button horizontally */
+}
+
+.RF H1 {
+	font-size: 1.2em; /* Adjust font size as needed */
+	color: #add8e6; /* Specify the color */
+	margin-bottom: 40px; /* Add bottom margin for spacing */
+        margin-top: 20px;
+}
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+.RF .logo {
+  height: 110px; /* Adjust as needed */
+  width: auto;
+  margin-left: 40%;
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 768px) {
+  .login-register-container {
+    padding: 10px;
+    width: 90%;
+  }
+
+  input, select, button {
+    width: 80%;
+  }
+  select {
+    width: 85%;
+  }
+}
+

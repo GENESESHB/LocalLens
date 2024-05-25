@@ -1,5 +1,12 @@
-.login-register-container { max-width: 600px; top: 40px; margin: auto; margin-top: 80px; padding: 20px; text-align: center; /* Center align the content */ border: 
-  1px solid #ccc; border-radius: 20px; box-shadow: 0 0 30px rgba(201, 57, 57, 0.3);
+.RF {
+  max-width: 600px;
+  margin: auto;
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center; /* Center align the content */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(201, 57, 57, 0.3);
 }
 
 form {
@@ -7,7 +14,16 @@ form {
 }
 
 input {
-  width: 60%;
+  width: 65%;
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: block; /* Ensures block-level centering */
+  margin-left: auto;
+  margin-right: auto; /* Center the input horizontally */
+}
+select {
+  width: 70%;
   border-radius: 20px;
   padding: 10px;
   margin-bottom: 10px;
@@ -27,19 +43,10 @@ button {
   cursor: pointer;
   display: block; /* Ensures block-level centering */
   margin-left: auto;
+  margin-top: 30px;
   margin-right: auto; /* Center the button horizontally */
 }
-.login-register-container h1 {
-  font-size: 2em; /* Adjust font size as needed */
-  color: #EDBD60; /* Specify the color */
-  margin-bottom: 20px; /* Add bottom margin for spacing */
-}
 
-.login-register-container p {
-  font-size: 1.2em; /* Adjust font size as needed */
-  color: #add8e6; /* Specify the color */
-  margin-bottom: 40px; /* Add bottom margin for spacing */
-}
 .social-buttons {
   display: flex;
   border-radius: 20px;
@@ -94,8 +101,9 @@ button {
     padding: 10px;
   }
 
-  .input {
-    width: 100%;
+  input,
+  select {
+    width: 60%;
   }
 }
 

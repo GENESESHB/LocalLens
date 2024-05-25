@@ -1,0 +1,82 @@
+.FP {
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 80px;
+  padding: 20px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card1, .card2, .card3 {
+  background-color: #fff;
+  padding: 20px;
+  margin: 10px;
+  flex: 1 1 45%; /* Make the cards take up 45% of the width each */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.card1 h2, .card2 h2, .card3 h2 {
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.card1 input,
+.card1 textarea,
+.card2 input,
+.card2 textarea {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.card1 button, .card2 button {
+  width: 50%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.service-card, .service-profile {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.image-preview {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.image-preview img {
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 100px;
+  height: auto;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .card1, .card2, .card3 {
+    flex: 1 1 100%; /* Ensure cards take full width on small screens */
+  }
+}
+

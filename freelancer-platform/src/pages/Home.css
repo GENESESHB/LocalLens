@@ -1,0 +1,33 @@
+/* Home.css */
+body {
+  background: linear-gradient(to bottom, white 0%, white 30%, #add8e6 100%);
+  color: black; /*text color */
+  font-family: Arial Narrow, sans-serif; /* Default font */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+}
+.content {
+  margin-top: 90px; /* Adjust based on the height of your fixed header */
+  padding: 20px;
+}
+
+/* SearchBar.css */
+.search-bar {
+  /* Other styles */
+  margin-top: 80px; /* Adjust based on the height of your fixed header */
+  /* Other styles */
+}
+
+.search-bar.scrolled {
+  /* Other styles */
+  margin-top: 1em;
+  top: 0; /* Adjust based on the height of your fixed header */
+  /* Other styles */
+}
+
+@media (max-width: 768px) {
+   .search-bar {
+      width: 80%;
+   }
+}

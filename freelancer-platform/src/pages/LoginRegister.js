@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './LoginRegister.css';
-import googleLogo from './assets/google-logo.png'; // Adjust the path if necessary
-import facebookLogo from './assets/facebook-logo.png'; // Adjust the path if necessary
+import googleLogo from './assets/google-logo.png';
+import facebookLogo from './assets/facebook-logo.png';
 
 function LoginRegister() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Use useNavigate
 
   const handleGoogleLogin = () => {
     window.location.href = 'http://localhost:8000/auth/login/google/';
@@ -29,18 +31,20 @@ function LoginRegister() {
     const data = await response.json();
 
     if (response.ok) {
-      // Handle successful login, e.g., save the token, redirect user, etc.
       console.log('Login successful:', data);
     } else {
-      // Handle login error
       console.error('Login failed:', data);
     }
   };
 
+  const handleRegisterRedirect = () => {
+    navigate('/RegisterFreelancer'); // Use navigate to redirect
+  };
+
   return (
     <div className="login-register-container">
-      <h1>Login | Register Page</h1>
-
+      <h1> Welcome to LocalLens</h1>
+      <p> let your travel be a movie </p>
       <form onSubmit={handleLogin}>
         <div>
           <label>Email:</label>
@@ -68,12 +72,13 @@ function LoginRegister() {
           <img src={googleLogo} alt="Google logo" /> Login with Google
         </button>
         <button className="social-button facebook-button" onClick={handleFacebookLogin}>
-          <img src={facebookLogo} alt="Facebook logo" /> Login with Facebook
+          <img src={facebookLogo} alt="Facebook logo" />Login with facebook
         </button>
       </div>
-        <button className="freelancer-button" onClick={() => window.location.href = '/RegisterFreelancer'}>
-          Register as Freelancer
-        </button>
+
+      <button className="freelancer-button" onClick={handleRegisterRedirect}>
+        Register as Freelancer
+      </button>
     </div>
   );
 }
