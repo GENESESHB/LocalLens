@@ -1,12 +1,27 @@
 // src/components/Navbar.js
-import './Navbar.css';  // Import the CSS file
-import React, { useState } from 'react';
+import './Navbar.css';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faUser, faSignInAlt, faBriefcase, faBars, faEnvelope } from '@fortawesome/free-solid-svg-icons'; // Correct import for faEnvelope
+import { faHome, faUser, faSignInAlt, faBriefcase, faBars, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import logo from '../pages/assets/locl.png';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null); // State to hold user information
+
+  useEffect(() => {
+    // Fetch user information after authentication
+    const fetchUserData = async () => {
+      // Make a request to your backend to get user information
+      // Example:
+      // const response = await fetch('/api/user');
+      // const userData = await response.json();
+      // setUser(userData);
+    };
+
+    fetchUserData();
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -16,7 +31,9 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <Link to="/">LocalLens</Link>
+          <Link to="./">
+              <img src={logo} alt="LocalLens Logo" className="logo" />
+          </Link>
         </div>
         <div className={`navbar-menu ${isOpen ? 'active' : ''}`}>
           <ul>
@@ -30,16 +47,22 @@ function Navbar() {
                 <FontAwesomeIcon icon={faEnvelope} className="fa-icon" /> Contact Us
               </Link>
             </li>
-            <li>
-              <Link to="/profile" onClick={toggleMenu}>
-                <FontAwesomeIcon icon={faUser} className="fa-icon" /> Profile
-              </Link>
-            </li>
-            <li>
-              <Link to="/Login-Register" onClick={toggleMenu}>
-                <FontAwesomeIcon icon={faSignInAlt} className="fa-icon" /> Login/Register
-              </Link>
-            </li>
+            {user ? ( // Check if user is authenticated
+              <li>
+                <Link to="/profile" onClick={toggleMenu}>
+                  {/* Render user's photo */}
+                  <div className="user-profile">
+                    <img src={user.photo} alt="User" />
+                  </div>
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <Link to="/Login-Register" onClick={toggleMenu}>
+                  <FontAwesomeIcon icon={faSignInAlt} className="fa-icon" /> Login/Register
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
         <div className="navbar-toggle" onClick={toggleMenu}>
@@ -51,4 +74,3 @@ function Navbar() {
 }
 
 export default Navbar;
-

@@ -1,11 +1,17 @@
+/* General styles for the navbar */
 .navbar {
-  background-color: none;
-  padding: 1em;
+  background-color: #ffffff;
+  z-index: 1000;
+  margin: 0;
+  position: fixed;
+  height: 75px;
+  top: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-  border-bottom: 1px solid #ccc;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-container {
@@ -19,11 +25,23 @@
   color: #0CC2E6;
   font-size: 1.5em;
   text-decoration: none;
-  margin-right: 1em; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img.logo {
+  height: 70px; /* Adjust the height as needed */
+  width: auto;
+  margin-right: 10px;
 }
 
 .navbar-menu {
   display: flex;
+  align-items: center;
+}
+
+.navbar-menu li + li {
+  margin-right: 1.7em; /* Add space between menu items */
 }
 
 .navbar-menu ul {
@@ -31,32 +49,29 @@
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: flex-end;
 }
 
 .navbar-menu li {
-  margin: 0 1em; /* Add space between each list item */
+  margin: 0 10px;
 }
 
 .navbar-menu a {
-  color: #E54463;
+  color: #333;
   text-decoration: none;
   font-size: 1em;
-  display: flex;
-  align-items: center;
+  padding: 10px 20px;
+  border-radius: 35px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .navbar-menu a:hover {
-  text-decoration: underline;
-}
-
-.navbar-menu .fa-icon {
-  margin-right: 0.5em; /* Add space between the icon and the text */
+  background-color: #0CC2E6;
+  color: white;
 }
 
 .navbar-toggle {
   display: none;
-  font-size: 2em;
+  font-size: 1.5em;
   color: #E54463;
   cursor: pointer;
 }
@@ -65,45 +80,47 @@
 @media (max-width: 768px) {
   .navbar-menu {
     position: absolute;
-    top: 100%;
+    top: 70px;
     left: 0;
     right: 0;
     width: 100%;
     background-color: white;
     flex-direction: column;
-    align-items: center; /* Center items vertically */
+    align-items: center;
     display: none;
-  }
-
-  .navbar {
-    width: 100%;
+    padding-bottom: 30px;
   }
 
   .navbar-menu.active {
     display: flex;
   }
-
-  .navbar-toggle {
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-top: 0.5em; /* Adjust as needed */
-  }
-
   .navbar-menu ul {
+    padding: 10px; /* add space */
     flex-direction: column;
     width: 100%;
   }
 
   .navbar-menu li {
     width: 100%;
-    padding: 0.5em 0;
+    text-align: center;
+    margin-top: 20px;
   }
-
+  .navbar-menu li + li {
+    margin-top: 50px; /* Add space between menu items */ 
+}
   .navbar-menu a {
     width: 100%;
-    padding: 1em;
-    text-align: center;
+    margin: 30px;
+    padding: 15px;
+    font-size: 1.2em;
+  }
+
+  .navbar-toggle {
+    display: block;
+    position: absolute;
+    right: 20px;
+    font-size: 2em;
+    top: 10px;
   }
 }
 
