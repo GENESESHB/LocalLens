@@ -36,6 +36,7 @@ if settings.DEBUG:
 urlpatterns += [
     # API base url
     path("api/", include("config.api_router")),
+    path("auth/", include("dj_rest_auth.urls")),
     # DRF auth token
     path("api/auth-token/", obtain_auth_token),
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),

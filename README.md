@@ -51,3 +51,9 @@ Backend: **http://localhost:8000**
 ```bash
    docker-compose -f docker-compose.local.yml run --rm django python3 manage.py createsuperuser
 ```
+
+### Check tests
+
+```bash
+   docker-compose -f docker-compose.local.yml run --rm django pytest
+```
