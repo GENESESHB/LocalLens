@@ -23,6 +23,7 @@ urlpatterns = [
     # User management
     path("users/", include("locallens_api.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    path("products/", include("locallens_api.products.urls")),
     # Your stuff: custom urls includes go here
     # ...
     # Media files
