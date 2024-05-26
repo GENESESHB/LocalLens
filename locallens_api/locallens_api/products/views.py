@@ -1,40 +1,44 @@
-# shop/views.py
+import time
 
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from django.views.generic import DeleteView
-from django.views.generic import DetailView
-from django.views.generic import ListView
-from django.views.generic import UpdateView
+from rest_framework import generics
+from rest_framework import status
+from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
+from .api.serializers import ProductSerializer
 from .models import Product
 
 
-class ProductListView(ListView):
-    model = Product
-    template_name = "shop/product_list.html"
-    context_object_name = "products"
+class ProductListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            self.permission_classes = [IsAuthenticated]
+        else:
+            self.permission_classes = [AllowAny]
+        return super().get_permissions()
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        product = {
+            "user": request.user.id,
+            "name": data.get("name"),
+            "description": data.get("description"),
+            "price": data.get("price"),
+            "stock": data.get("stock"),
+            "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "updated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        product_serializer = ProductSerializer(data=product)
+        product_serializer.is_valid(raise_exception=True)
+        product_serializer.save()
+        return Response(product_serializer.data, status=status.HTTP_201_CREATED)
 
 
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = "shop/product_detail.html"
-    context_object_name = "product"
-
-
-class ProductCreateView(CreateView):
-    model = Product
-    template_name = "shop/product_form.html"
-    fields = ["user", "name", "description", "price", "stock"]
-
-
-class ProductUpdateView(UpdateView):
-    model = Product
-    template_name = "shop/product_form.html"
-    fields = ["user", "name", "description", "price", "stock"]
-
-
-class ProductDeleteView(DeleteView):
-    model = Product
-    template_name = "shop/product_confirm_delete.html"
-    success_url = reverse_lazy("product_list")
+class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer

@@ -10,6 +10,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "id",
             "user",
             "name",
+            "image",
             "description",
             "price",
             "stock",
