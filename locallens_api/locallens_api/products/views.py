@@ -24,9 +24,20 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data
+        if "image" not in request.FILES:
+            return Response(
+                {"message": "You must upload an image to create a product."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if request.user.is_anonymous:
+            return Response(
+                {"message": "You must be logged in to create a product."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         product = {
             "user": request.user.id,
             "name": data.get("name"),
+            "image": request.FILES["image"],
             "description": data.get("description"),
             "price": data.get("price"),
             "stock": data.get("stock"),
