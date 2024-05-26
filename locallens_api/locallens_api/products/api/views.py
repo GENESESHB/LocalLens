@@ -7,7 +7,7 @@ from locallens_api.products.models import Product
 from .serializers import ProductSerializer
 
 
-class ProductListCreateAPIView(generics.ListCreateAPIView):
+class ProductCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 

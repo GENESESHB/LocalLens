@@ -1,13 +1,13 @@
 from django.urls import path
 
-from .views import ProductListCreateView
-from .views import ProductRetrieveUpdateDestroyView
+from .api.views import ProductCreateAPIView
+from .api.views import ProductRetrieveUpdateDestroyAPIView
 
 urlpatterns = [
-    path("/", ProductListCreateView.as_view(), name="product_list_create"),
+    path("", ProductCreateAPIView.as_view(), name="product_list_create"),
     path(
         "<int:pk>/",
-        ProductRetrieveUpdateDestroyView.as_view(),
+        ProductRetrieveUpdateDestroyAPIView.as_view(),
         name="product_retrieve_update_destroy",
     ),
 ]
