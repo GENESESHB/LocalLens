@@ -23,6 +23,7 @@ urlpatterns = [
     # User management
     path("users/", include("locallens_api.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    path("products/", include("locallens_api.products.urls")),
     # Your stuff: custom urls includes go here
     # ...
     # Media files
@@ -36,6 +37,7 @@ if settings.DEBUG:
 urlpatterns += [
     # API base url
     path("api/", include("config.api_router")),
+    path("auth/", include("dj_rest_auth.urls")),
     # DRF auth token
     path("api/auth-token/", obtain_auth_token),
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
