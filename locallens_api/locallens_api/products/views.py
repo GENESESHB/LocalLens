@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .api.serializers import ProductSerializer
+from .api.serializers import ProductUserSerializer
 from .models import Product
 
 
@@ -52,4 +53,4 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
 
 class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductUserSerializer

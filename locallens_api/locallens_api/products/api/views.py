@@ -5,6 +5,7 @@ from rest_framework import generics
 from locallens_api.products.models import Product
 
 from .serializers import ProductSerializer
+from .serializers import ProductUserSerializer
 
 
 class ProductCreateAPIView(generics.ListCreateAPIView):
@@ -14,4 +15,4 @@ class ProductCreateAPIView(generics.ListCreateAPIView):
 
 class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductUserSerializer
