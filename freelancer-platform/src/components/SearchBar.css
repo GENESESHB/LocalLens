@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
+  height: 60px;
   background-color: transparent;
   transition: all 0.3s ease;
   margin-top: 90px;
@@ -49,7 +49,7 @@
   height: 60px;
   position: fixed;
   background-color: #FFFFFF;
-  margin-top: 1em;
+  margin-top: 5px;
   left: 35%;
   transform: translateX(-50%);
   width: 30%;
@@ -58,8 +58,8 @@
 }
 
 .search-bar.scrolled input {
-  height: 50px;
-  padding: 20px;
+  height: auto;
+  padding: 10px;
   width: 80%;
 }
 
@@ -77,7 +77,7 @@
 
 .search-bar.expanded input {
   border: 1px solid #ccc;
-  padding: 15px;
+  padding: 10px;
 }
 .search-icon:hover {
   color: blue; /* Change the color as needed */
@@ -87,7 +87,7 @@
 @media (max-width: 768px) {
   .search-bar {
     max-width: 90%;
-    margin-top: 20px;
+    margin-top: 2px;
     padding: 5px;
   }
 
@@ -103,16 +103,17 @@
   }
 
   .search-bar.scrolled {
-    height: 60px;
+    height: auto;
     left: 50%;
     width: 40%;
   }
 
   .search-bar.scrolled input {
     width: 80%;
+    height: 20px;
   }
   .search-bar.expanded {
-    height: 60px;
+    height: auto;
     left: 50%;
     margin-top: 60px;
     width: 80%;
