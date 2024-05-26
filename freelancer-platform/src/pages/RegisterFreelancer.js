@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import './RegisterFreelancer.css';
 import logo from './assets/LOCALLENS.png';
 
@@ -23,10 +22,12 @@ const RegisterFreelancer = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    phoneNumber: '',
+    phone: '',
     country: '',
     city: '',
-    language: '',
+    language1: '',
+    language2: '',
+    language3: '',
     agreeToPrivacyPolicy: false,
   });
 
@@ -52,23 +53,38 @@ const RegisterFreelancer = () => {
     if (name === 'country' && countryCodes[value]) {
       setFormData((prevData) => ({
         ...prevData,
-        phoneNumber: countryCodes[value],
+        phone: countryCodes[value],
       }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!passwordError) {
-      // Handle form submission logic
-      console.log(formData);
+      try {
+        const response = await fetch('http://127.0.0.1:8000/register-freelancer/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result.message);
+        } else {
+          console.error('Failed to register freelancer');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
   };
 
   return (
     <div className="RF">
-      <h1>Register as Freelancer
-      </h1>
+      <h1>Register as Freelancer</h1>
       <form onSubmit={handleSubmit}>
         {currentStep === 1 && (
           <>
@@ -134,7 +150,7 @@ const RegisterFreelancer = () => {
               type="tel"
               name="phone"
               placeholder="Phone Number"
-              value={formData.phoneNumber}
+              value={formData.phone}
               onChange={handleChange}
               required
             />
@@ -148,11 +164,11 @@ const RegisterFreelancer = () => {
             />
             <select
               name="language1"
-              value={formData.language}
+              value={formData.language1}
               onChange={handleChange}
               required
             >
-              <option value="">first language</option>
+              <option value="">First language</option>
               <option value="Tamazight">Tamazight</option>
               <option value="DarijaMorocco">DarijaMorocco</option>
               <option value="English">English</option>
@@ -161,11 +177,11 @@ const RegisterFreelancer = () => {
             </select>
             <select
               name="language2"
-              value={formData.language}
+              value={formData.language2}
               onChange={handleChange}
               required
             >
-              <option value="">seconde language</option>
+              <option value="">Second language</option>
               <option value="Tamazight">Tamazight</option>
               <option value="DarijaMorocco">DarijaMorocco</option>
               <option value="English">English</option>
@@ -174,11 +190,11 @@ const RegisterFreelancer = () => {
             </select>
             <select
               name="language3"
-              value={formData.language}
+              value={formData.language3}
               onChange={handleChange}
               required
             >
-              <option value=""> other language</option>
+              <option value="">Other language</option>
               <option value="Tamazight">Tamazight</option>
               <option value="DarijaMorocco">DarijaMorocco</option>
               <option value="English">English</option>
@@ -206,4 +222,3 @@ const RegisterFreelancer = () => {
 };
 
 export default RegisterFreelancer;
-

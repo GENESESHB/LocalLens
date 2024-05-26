@@ -21,7 +21,7 @@ body {
 
 .search-bar.scrolled {
   /* Other styles */
-  margin-top: 1em;
+  margin-top: 1px;
   top: 0; /* Adjust based on the height of your fixed header */
   /* Other styles */
 }
