@@ -82,6 +82,8 @@ THIRD_PARTY_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
+    "dj_rest_auth",
+    "rest_framework_simplejwt",
 ]
 
 LOCAL_APPS = [
@@ -331,11 +333,18 @@ SOCIALACCOUNT_FORMS = {"signup": "locallens_api.users.forms.UserSocialSignupForm
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "ll_access_token",
+    "JWT_AUTH_REFRESH_COOKIE": "ll_refresh-token",
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
