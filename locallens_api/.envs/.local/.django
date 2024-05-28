@@ -12,3 +12,10 @@ REDIS_URL=redis://redis:6379/0
 # Flower
 CELERY_FLOWER_USER=RnGFigJiYgYtGlKddGfvRzEjSxWtNoic
 CELERY_FLOWER_PASSWORD=wUGJimVAUwuiWNQefq6BGDUJYLYHfEKkZpDcbDSvjxcHSn4CemNBsIC6cK7iojj2
+
+
+EMAIL_PORT=587
+EMAIL_HOST=smtp.office365.com
+EMAIL_HOST_USER=locallens_ma@outlook.com
+EMAIL_HOST_PASSWORD=,5zvJ741Ggm-
+DEFAULT_FROM_EMAIL=locallens_ma@outlook.com

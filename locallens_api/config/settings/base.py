@@ -240,6 +240,13 @@ EMAIL_BACKEND = env(
     "DJANGO_EMAIL_BACKEND",
     default="django.core.mail.backends.smtp.EmailBackend",
 )
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = env("EMAIL_HOST", default="smtp.office365.com")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="locallens_ma@outlook.com")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default=",5zvJ741Ggm-")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="locallens_ma@outlook.com")
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
 
