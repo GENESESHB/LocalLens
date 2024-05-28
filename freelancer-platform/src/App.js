@@ -7,6 +7,7 @@ import LoginRegister from './pages/LoginRegister';
 import Login from './pages/Login';
 import Privacy from './pages/Privacy';
 import RegisterFreelancer from './pages/RegisterFreelancer';
+import ResetPassword from './pages/ResetPassword';
 import PDetails from './pages/PDetails';
 import Products from './pages/Products';
 import Experience from './pages/Experience';
@@ -30,7 +31,8 @@ function App() {
           <Route path="/Privacy" element={<Privacy />} />
           <Route path="/Products" element={<Privacy />} />
           <Route path="/Experience" element={<Experience />} />
-          <Route path="/Register" element={<RegisterFreelancer />} /> {/* Use element attribute */}
+          <Route path="/Register" element={<RegisterFreelancer />} /> 
+          <Route path="/Reset" element={<ResetPassword />} /> 
         </Routes>
       </div>
     </Router>

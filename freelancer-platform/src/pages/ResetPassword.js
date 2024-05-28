@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND_ENDPOINT } from '../constants';
 
-export function LoginRegister() {
+export function ResetPassword() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -24,24 +24,25 @@ export function LoginRegister() {
     checkUserConnection();
   }, [navigate]);
 
-  const handleLogin = async (e) => {
+  const handleReset = async (e) => {
     e.preventDefault();
     setErrorMessage('');
+    setSuccessMessage('');
     setLoading(true);
 
-    const response = await fetch(BACKEND_ENDPOINT + 'auth/login/', {
+    const response = await fetch(BACKEND_ENDPOINT + 'auth/password/reset/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email }),
       credentials: 'include', 
     });
 
     const data = await response.json();
 
     if (response.ok) {
-      navigate('/');
+      setSuccessMessage(data.detail);
     } else {
       if (data.detail) {
         setErrorMessage(data.detail);
@@ -53,11 +54,8 @@ export function LoginRegister() {
     }
   };
 
-  const handleRegisterRedirect = () => {
-    navigate('/Register');
-  };
-  const handleResetRedirect = () => {
-    navigate('/Reset');
+  const handleLoginRedirect = () => {
+    navigate('/Login');
   };
 
   return (
@@ -69,7 +67,7 @@ export function LoginRegister() {
         {errorMessage && (
           <p className="text-red-500 text-center mb-4">{errorMessage}</p>
         )}
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleReset}>
           <div>
             <label className="block text-md font-medium text-gray-700">Email:</label>
             <input
@@ -82,38 +80,23 @@ export function LoginRegister() {
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
             />
           </div>
-          <div>
-            <label className="block text-md font-medium text-gray-700">Password:</label>
-            <input
-              name='password'
-              placeholder='Please enter your password'
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
-            />
-          </div>
           <button type="submit" className="mt-6 w-full bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
-            Login
+            {loading ? (
+                <svg className="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+              ) : (
+                'Reset Password'
+            )}
           </button>
           <p className="mt-4 text-gray-600">
-          Don't have an account ?{' '}
+          Already have an account ?{' '}
             <span
-              onClick={handleRegisterRedirect}
+              onClick={handleLoginRedirect}
               className="text-yellow-600 hover:text-yellow-700 cursor-pointer"
             >
-              Register Now
-            </span>
-          </p>
-
-          <p className="text-gray-600">
-          Forgot your password ?{' '}
-            <span
-              onClick={handleResetRedirect}
-              className="text-yellow-600 hover:text-yellow-700 cursor-pointer"
-            >
-              Reset Password
+              Back to login
             </span>
           </p>
         </form>
@@ -122,3 +105,5 @@ export function LoginRegister() {
     </div>
   );
 }
+
+export default ResetPassword;
