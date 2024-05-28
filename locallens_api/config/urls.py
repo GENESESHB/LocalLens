@@ -12,6 +12,12 @@ from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 from dj_rest_auth.registration.views import RegisterView
 from locallens_api.users.api.views import AccountConfirmEmailView
+from dj_rest_auth.views import (
+    LoginView,
+    LogoutView,
+    PasswordChangeView,
+    UserDetailsView,
+)
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -35,19 +41,22 @@ if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development
     urlpatterns += staticfiles_urlpatterns()
 
-# API URLS
 urlpatterns += [
-    # API base url
     path("api/", include("config.api_router")),
-    path("auth/", include("dj_rest_auth.urls")),
-    # path("auth/login/", LoginView.as_view(), name="login"),
+    # path("auth/", include("dj_rest_auth.urls")),
+    path("auth/login/", LoginView.as_view(), name="rest_login"),
+    path("auth/logout/", LogoutView.as_view(), name="rest_logout"),
+    path("auth/user/", UserDetailsView.as_view(), name="rest_user_details"),
+    path(
+        "auth/password/change/",
+        PasswordChangeView.as_view(),
+        name="rest_password_change",
+    ),
     path(
         "auth/registration/account-confirm-email/<str:key>/",
         AccountConfirmEmailView.as_view(template_name="account/email_confirm.html"),
         name="account_confirm_email",
     ),
-    # path('auth/registration/', RegisterView.as_view(),
-    #      name='account_registration'),
     path("auth/registration/", include("dj_rest_auth.registration.urls")),
     # DRF auth token
     path("api/auth-token/", obtain_auth_token),
@@ -58,6 +67,15 @@ urlpatterns += [
         name="api-docs",
     ),
 ]
+if settings.REST_AUTH["USE_JWT"]:
+    from rest_framework_simplejwt.views import TokenVerifyView
+
+    from dj_rest_auth.jwt_auth import get_refresh_view
+
+    urlpatterns += [
+        path("auth/token/verify/", TokenVerifyView.as_view(), name="token_verify"),
+        path("auth/token/refresh/", get_refresh_view().as_view(), name="token_refresh"),
+    ]
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
