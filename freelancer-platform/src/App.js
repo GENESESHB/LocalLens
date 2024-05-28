@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Privacy from './pages/Privacy';
 import RegisterFreelancer from './pages/RegisterFreelancer';
 import ResetPassword from './pages/ResetPassword';
+import ResetPasswordConfirm from './pages/ResetPasswordConfirm';
 import PDetails from './pages/PDetails';
 import Products from './pages/Products';
 import Experience from './pages/Experience';
@@ -25,7 +26,6 @@ function App() {
           <Route path="/Products" element={<Products />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/Login" element={<LoginRegister />} />
-          {/* <Route path="/Login" element={<Login />} /> */}
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/PDetails" element={<PDetails />} />
           <Route path="/Privacy" element={<Privacy />} />
@@ -33,6 +33,8 @@ function App() {
           <Route path="/Experience" element={<Experience />} />
           <Route path="/Register" element={<RegisterFreelancer />} /> 
           <Route path="/Reset" element={<ResetPassword />} /> 
+          <Route path="/Reset/:token" element={<ResetPasswordConfirm />} />
+
         </Routes>
       </div>
     </Router>

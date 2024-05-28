@@ -11,7 +11,11 @@ from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
 from dj_rest_auth.registration.views import RegisterView
-from locallens_api.users.api.views import AccountConfirmEmailView
+from locallens_api.users.api.views import (
+    AccountConfirmEmailView,
+    PasswordResetRequestView,
+    PasswordResetConfirmView,
+)
 from dj_rest_auth.views import (
     LoginView,
     LogoutView,
@@ -47,6 +51,16 @@ urlpatterns += [
     path("auth/login/", LoginView.as_view(), name="rest_login"),
     path("auth/logout/", LogoutView.as_view(), name="rest_logout"),
     path("auth/user/", UserDetailsView.as_view(), name="rest_user_details"),
+    path(
+        "auth/password/reset/",
+        PasswordResetRequestView.as_view(),
+        name="password_reset",
+    ),
+    path(
+        "auth/password/reset/confirm/",
+        PasswordResetConfirmView.as_view(),
+        name="password_reset_confirm",
+    ),
     path(
         "auth/password/change/",
         PasswordChangeView.as_view(),

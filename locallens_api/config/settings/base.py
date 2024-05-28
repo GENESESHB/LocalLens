@@ -401,3 +401,4 @@ SPECTACULAR_SETTINGS = {
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+REACT_APP_URL = "http://localhost:3000"
