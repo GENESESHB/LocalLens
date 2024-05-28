@@ -1,6 +1,8 @@
 from http import HTTPStatus
 
 import requests
+from django.conf import settings
+from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.views import View
 from rest_framework import status
@@ -10,14 +12,55 @@ from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
+from locallens_api.users.models import PasswordResetToken
 from locallens_api.users.models import User
 
 from .permissions import IsSuperuserOrSelf
+from .serializers import PasswordResetConfirmSerializer
+from .serializers import PasswordResetRequestSerializer
 from .serializers import UserSerializer
 
 REQUEST_TIMEOUT = 10
+
+
+class PasswordResetRequestView(APIView):
+    def post(self, request):
+        serializer = PasswordResetRequestSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data["email"]
+            user = User.objects.get(email=email)
+            PasswordResetToken.invalidate_previous_tokens(user)
+            token = PasswordResetToken.objects.create(user=user)
+
+            reset_url = f"{settings.REACT_APP_URL}/Reset/{token.token}/"
+            send_mail(
+                "Password Reset Request",
+                f"Click the link to reset your password: {reset_url}",
+                "locallens_ma@outlook.com",
+                [email],
+                fail_silently=False,
+            )
+
+            return Response(
+                {"detail": "Password reset link has been sent to your Email."},
+                status=status.HTTP_200_OK,
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PasswordResetConfirmView(APIView):
+    def post(self, request):
+        serializer = PasswordResetConfirmSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"detail": "Password has been reset."},
+                status=status.HTTP_200_OK,
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AccountConfirmEmailView(View):

@@ -41,8 +41,10 @@ export function LoginRegister() {
     const data = await response.json();
 
     if (response.ok) {
+      setLoading(false); 
       navigate('/');
     } else {
+      setLoading(false); 
       if (data.detail) {
         setErrorMessage(data.detail);
       } else if (data.non_field_errors) {
@@ -62,7 +64,6 @@ export function LoginRegister() {
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1539635278303-d4002c07eae3')" }}>
-      <div className="absolute inset-0 bg-black opacity-60"></div>
       <div className="relative bg-white bg-opacity-80 p-8 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-gray-800">Welcome to LocalLens</h1>
         <p className="text-center mb-6 text-gray-600">Let your travel be a movie</p>
