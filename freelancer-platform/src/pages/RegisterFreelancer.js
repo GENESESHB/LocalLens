@@ -106,7 +106,7 @@ const RegisterFreelancer = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1539635278303-d4002c07eae3')" }}>
-      <div className="relative bg-white bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-md">
+      <div className="relative bg-white bg-opacity-80 p-8 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">Register</h1>
         {successMessage && (
           <p className="text-green-500 text-center mb-4">{successMessage}</p>
