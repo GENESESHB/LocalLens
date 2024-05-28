@@ -10,6 +10,12 @@ from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
+# from rest_framework_simplejwt.views import (
+#     TokenObtainPairView,
+#     TokenRefreshView,
+# )
+# from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView
+
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -38,6 +44,7 @@ urlpatterns += [
     # API base url
     path("api/", include("config.api_router")),
     path("auth/", include("dj_rest_auth.urls")),
+    # path("auth/login/", LoginView.as_view(), name="login"),
     path("auth/registration/", include("dj_rest_auth.registration.urls")),
     # DRF auth token
     path("api/auth-token/", obtain_auth_token),

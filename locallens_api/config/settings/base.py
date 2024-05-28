@@ -1,6 +1,7 @@
 # ruff: noqa: ERA001, E501
 """Base settings to build other settings files upon."""
 
+from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -157,6 +158,8 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React frontend URL
 ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 # STATIC
 # ------------------------------------------------------------------------------
@@ -342,10 +345,35 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
+REST_USE_JWT = True
+
 REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_COOKIE": "ll_access_token",
     "JWT_AUTH_REFRESH_COOKIE": "ll_refresh-token",
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": env(
+        "DJANGO_SECRET_KEY",
+        default="N60QrZbkpXXlPrq39vw0Ak5xp8Q104rVZ4rAXg26Kn8GLdFa4xdslXaDfUe4nR1W",
+    ),
+    "VERIFYING_KEY": None,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+}
+
+REST_AUTH_SERIALIZERS = {
+    "TOKEN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
@@ -361,5 +389,6 @@ SPECTACULAR_SETTINGS = {
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
     "SCHEMA_PATH_PREFIX": "/api/",
 }
+
 # Your stuff...
 # ------------------------------------------------------------------------------

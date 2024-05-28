@@ -6,7 +6,7 @@ import Profile from './pages/Profile';
 import LoginRegister from './pages/LoginRegister';
 import Login from './pages/Login';
 import Privacy from './pages/Privacy';
-import RegisterFreelancer from './pages/RegisterFreelancer'; // Correctly import the component
+import RegisterFreelancer from './pages/RegisterFreelancer';
 import PDetails from './pages/PDetails';
 import Products from './pages/Products';
 import Experience from './pages/Experience';
@@ -23,14 +23,14 @@ function App() {
           <Route path="/Experience" element={<Experience />} />
           <Route path="/Products" element={<Products />} />
           <Route path="/Profile" element={<Profile />} />
-          <Route path="/Login-Register" element={<LoginRegister />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/Login" element={<LoginRegister />} />
+          {/* <Route path="/Login" element={<Login />} /> */}
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/PDetails" element={<PDetails />} />
           <Route path="/Privacy" element={<Privacy />} />
           <Route path="/Products" element={<Privacy />} />
           <Route path="/Experience" element={<Experience />} />
-          <Route path="/RegisterFreelancer" element={<RegisterFreelancer />} /> {/* Use element attribute */}
+          <Route path="/Register" element={<RegisterFreelancer />} /> {/* Use element attribute */}
         </Routes>
       </div>
     </Router>

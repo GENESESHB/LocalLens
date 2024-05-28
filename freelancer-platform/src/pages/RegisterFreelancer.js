@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './RegisterFreelancer.css';
 import logo from './assets/LOCALLENS.png';
-
+import { BACKEND_ENDPOINT } from '../constants';
 const countryCodes = {
   "Morocco": "+212",
   "United States": "+1",
@@ -20,8 +19,8 @@ const RegisterFreelancer = () => {
     firstName: '',
     familyName: '',
     email: '',
-    password: '',
-    confirmPassword: '',
+    password1: '',
+    password2: '',
     phone: '',
     country: '',
     city: '',
@@ -62,7 +61,7 @@ const RegisterFreelancer = () => {
     e.preventDefault();
     if (!passwordError) {
       try {
-        const response = await fetch('http://127.0.0.1:8000/register-freelancer/', {
+        const response = await fetch(BACKEND_ENDPOINT + 'auth/registration/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -83,140 +82,45 @@ const RegisterFreelancer = () => {
   };
 
   return (
-    <div className="RF">
-      <h1>Register as Freelancer</h1>
-      <form onSubmit={handleSubmit}>
-        {currentStep === 1 && (
-          <>
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="familyName"
-              placeholder="Family Name"
-              value={formData.familyName}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-            {passwordError && <p className="error">{passwordError}</p>}
-            <button type="button" onClick={() => setCurrentStep(2)}>Continue</button>
-          </>
-        )}
+    <div className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1539635278303-d4002c07eae3')" }}>
+      <div className="absolute inset-0 bg-black opacity-60"></div>
+      <div className="relative bg-white bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">Register</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
 
-        {currentStep === 2 && (
-          <>
-            <select
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select a country</option>
-              {countries.map((country) => (
-                <option key={country} value={country}>{country}</option>
-              ))}
-            </select>
-            <input
-              type="tel"
-              name="phone"
-              placeholder="Phone Number"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="city"
-              placeholder="City"
-              value={formData.city}
-              onChange={handleChange}
-              required
-            />
-            <select
-              name="language1"
-              value={formData.language1}
-              onChange={handleChange}
-              required
-            >
-              <option value="">First language</option>
-              <option value="Tamazight">Tamazight</option>
-              <option value="DarijaMorocco">DarijaMorocco</option>
-              <option value="English">English</option>
-              <option value="French">French</option>
-              <option value="Spanish">Spanish</option>
-            </select>
-            <select
-              name="language2"
-              value={formData.language2}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Second language</option>
-              <option value="Tamazight">Tamazight</option>
-              <option value="DarijaMorocco">DarijaMorocco</option>
-              <option value="English">English</option>
-              <option value="French">French</option>
-              <option value="Spanish">Spanish</option>
-            </select>
-            <select
-              name="language3"
-              value={formData.language3}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Other language</option>
-              <option value="Tamazight">Tamazight</option>
-              <option value="DarijaMorocco">DarijaMorocco</option>
-              <option value="English">English</option>
-              <option value="French">French</option>
-              <option value="Spanish">Spanish</option>
-            </select>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="agreeToPrivacyPolicy"
-                  checked={formData.agreeToPrivacyPolicy}
-                  onChange={handleChange}
-                  required
-                />
-                I agree to the Privacy Policy
-              </label>
-            </div>
-            <button type="submit">Register</button>
-          </>
-        )}
-      </form>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+              />
+              <input
+                type="password"
+                name="password1"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+              />
+              <input
+                type="password"
+                name="password2"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 sm:text-sm"
+              />
+              {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
+              <button type="submit" className="mt-6 w-full bg-yellow-600 text-white py-2 px-4 rounded-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                Continue
+              </button>
+        </form>
+      </div>
     </div>
   );
 };

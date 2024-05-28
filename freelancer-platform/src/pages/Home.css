@@ -1,6 +1,6 @@
 /* Home.css */
 body {
-  background: linear-gradient(to bottom, white 0%, white 30%, #add8e6 100%);
+  background: rgb(240, 240, 241);
   color: black; /*text color */
   font-family: Arial Narrow, sans-serif; /* Default font */
   margin: 0; /* Remove default margin */
