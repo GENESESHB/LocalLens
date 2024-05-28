@@ -1,44 +1,35 @@
-// src/components/Navbar.js
 import './Navbar.css';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faUser, faSignInAlt, faBriefcase, faBars, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase, faBars, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import logo from '../pages/assets/locl.png';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); // State to hold user information
 
   useEffect(() => {
+    // Fetch user information after authentication
     const fetchUserData = async () => {
       try {
-        // Example login data, replace with actual data from your form or context
-        const loginData = new FormData();
-        loginData.append('username', 'exampleUsername');
-        loginData.append('password', 'examplePassword');
-
-        // Fetch the authentication token
-        const loginResponse = await fetch('/auth/login/', {
-          method: 'POST',
-          body: loginData,
+        // Make a request to your backend to get user information
+        const response = await fetch('http://localhost:8000/api/users/me/', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+          },
         });
-
-        if (loginResponse.ok) {
-          const loginResult = await loginResponse.json();
-          const { access, refresh, user } = loginResult;
-
-          // Save tokens to localStorage or state if needed
-          localStorage.setItem('accessToken', access);
-          localStorage.setItem('refreshToken', refresh);
-
-          // Set the user information in the state
-          setUser(user);
+        if (response.ok) {
+          const userData = await response.json();
+          setUser(userData);
         } else {
-          console.error('Login failed');
+          setUser(null); // Clear user state if authentication fails
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
+        setUser(null); // Clear user state if an error occurs
       }
     };
 
@@ -69,19 +60,13 @@ function Navbar() {
                 <FontAwesomeIcon icon={faEnvelope} className="fa-icon" /> Contact Us
               </Link>
             </li>
-            {user ? ( // Check if user is authenticated
+            {user && ( // Check if user is authenticated
               <li>
                 <Link to="/profile" onClick={toggleMenu}>
                   {/* Render user's photo */}
                   <div className="user-profile">
                     <img src={user.photo} alt="User" />
                   </div>
-                </Link>
-              </li>
-            ) : (
-              <li>
-                <Link to="/Login" onClick={toggleMenu}>
-                  <FontAwesomeIcon icon={faSignInAlt} className="fa-icon" /> Login/Register
                 </Link>
               </li>
             )}
