@@ -8,16 +8,38 @@ import logo from '../pages/assets/locl.png';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null); // State to hold user information
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Fetch user information after authentication
     const fetchUserData = async () => {
-      // Make a request to your backend to get user information
-      // Example:
-      // const response = await fetch('/api/user');
-      // const userData = await response.json();
-      // setUser(userData);
+      try {
+        // Example login data, replace with actual data from your form or context
+        const loginData = new FormData();
+        loginData.append('username', 'exampleUsername');
+        loginData.append('password', 'examplePassword');
+
+        // Fetch the authentication token
+        const loginResponse = await fetch('/auth/login/', {
+          method: 'POST',
+          body: loginData,
+        });
+
+        if (loginResponse.ok) {
+          const loginResult = await loginResponse.json();
+          const { access, refresh, user } = loginResult;
+
+          // Save tokens to localStorage or state if needed
+          localStorage.setItem('accessToken', access);
+          localStorage.setItem('refreshToken', refresh);
+
+          // Set the user information in the state
+          setUser(user);
+        } else {
+          console.error('Login failed');
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
     };
 
     fetchUserData();
@@ -58,7 +80,7 @@ function Navbar() {
               </li>
             ) : (
               <li>
-                <Link to="/Login-Register" onClick={toggleMenu}>
+                <Link to="/Login" onClick={toggleMenu}>
                   <FontAwesomeIcon icon={faSignInAlt} className="fa-icon" /> Login/Register
                 </Link>
               </li>
