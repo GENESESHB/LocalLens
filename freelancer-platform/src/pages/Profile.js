@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BACKEND_ENDPOINT } from '../constants';
 import './Profile.css';
 
 function FreelancerProfile() {
@@ -15,12 +16,18 @@ function FreelancerProfile() {
   const [isProfileVisible, setIsProfileVisible] = useState(false);
 
   useEffect(() => {
-    fetchFreelancerData();
+    fetchUserData();
   }, []);
 
-  const fetchFreelancerData = async () => {
+  const fetchUserData = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/freelancer/${freelancer.id}/`);
+      const response = await fetch(BACKEND_ENDPOINT + "api/users/me/",{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', 
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch freelancer data');
       }
