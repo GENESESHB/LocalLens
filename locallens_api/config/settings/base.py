@@ -145,6 +145,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "locallens_api.middleware.DisableSessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -349,8 +350,8 @@ SOCIALACCOUNT_FORMS = {"signup": "locallens_api.users.forms.UserSocialSignupForm
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+        # "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
@@ -390,7 +391,6 @@ REST_AUTH_SERIALIZERS = {
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
-# CORS_URLS_REGEX = r"^/api/.*$"
 CORS_URLS_REGEX = r"^/(api|auth|products)/.*$"
 
 # By Default swagger ui is available only to admin user(s). You can change permission classes to change that

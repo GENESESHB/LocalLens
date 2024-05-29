@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from locallens_api.products.models import Product
-from locallens_api.users.api.serializers import UserSerializer
+from locallens_api.users.api.serializers import UserProductSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductUserSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserProductSerializer()
 
     class Meta:
         model = Product
