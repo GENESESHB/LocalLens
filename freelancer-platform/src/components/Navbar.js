@@ -60,13 +60,19 @@ function Navbar() {
                 <FontAwesomeIcon icon={faEnvelope} className="fa-icon" /> Contact Us
               </Link>
             </li>
-            {user && ( // Check if user is authenticated
+            {user ? ( // Check if user is authenticated
               <li>
                 <Link to="/profile" onClick={toggleMenu}>
                   {/* Render user's photo */}
                   <div className="user-profile">
                     <img src={user.photo} alt="User" />
                   </div>
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <Link to="/Login" onClick={toggleMenu}>
+                  <FontAwesomeIcon icon={faSignInAlt} className="fa-icon" /> Login/Register
                 </Link>
               </li>
             )}
@@ -79,5 +85,4 @@ function Navbar() {
     </nav>
   );
 }
-
 export default Navbar;
