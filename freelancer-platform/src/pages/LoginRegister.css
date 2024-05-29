@@ -16,19 +16,6 @@ input {
   margin-right: auto; /* Center the input horizontally */
 }
 
-button {
-  width: 40%;
-  padding: 10px;
-  margin-bottom: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  display: block; /* Ensures block-level centering */
-  margin-left: auto;
-  margin-right: auto; /* Center the button horizontally */
-}
 .login-register-container h1 {
   font-size: 2em; /* Adjust font size as needed */
   color: #EDBD60; /* Specify the color */
