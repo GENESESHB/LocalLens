@@ -15,7 +15,10 @@ CELERY_FLOWER_PASSWORD=wUGJimVAUwuiWNQefq6BGDUJYLYHfEKkZpDcbDSvjxcHSn4CemNBsIC6c
 
 
 EMAIL_PORT=587
-EMAIL_HOST=smtp.office365.com
+EMAIL_HOST=smtp-mail.outlook.com
+IMAP_EMAIL_HOST=imap-mail.outlook.com
 EMAIL_HOST_USER=locallens_ma@outlook.com
 EMAIL_HOST_PASSWORD=,5zvJ741Ggm-
 DEFAULT_FROM_EMAIL=locallens_ma@outlook.com
+DJANGO_EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+# lenslocal454@gmail.com

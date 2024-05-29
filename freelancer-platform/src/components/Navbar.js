@@ -1,35 +1,33 @@
-import './Navbar.css';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBriefcase, faBars, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase, faBars, faEnvelope, faSignInAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import logo from '../pages/assets/locl.png';
+import { BACKEND_ENDPOINT } from '../constants';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null); // State to hold user information
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Fetch user information after authentication
     const fetchUserData = async () => {
       try {
-        // Make a request to your backend to get user information
-        const response = await fetch('http://localhost:8000/api/users/me/', {
+        const response = await fetch(BACKEND_ENDPOINT + 'api/users/me/', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json',
           },
+          credentials: 'include',
         });
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
         } else {
-          setUser(null); // Clear user state if authentication fails
+          setUser(null);
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
-        setUser(null); // Clear user state if an error occurs
+        setUser(null);
       }
     };
 
@@ -41,48 +39,46 @@ function Navbar() {
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="navbar-logo">
+    <nav className="bg-white shadow-md p-4 sticky top-0 z-50">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="flex items-center">
           <Link to="./">
-              <img src={logo} alt="LocalLens Logo" className="logo" />
+            <img src={logo} alt="LocalLens Logo" className="h-10" />
           </Link>
         </div>
-        <div className={`navbar-menu ${isOpen ? 'active' : ''}`}>
-          <ul>
-            <li>
-              <Link to="/Experience" onClick={toggleMenu}>
-                <FontAwesomeIcon icon={faBriefcase} className="fa-icon" /> Experience
+        <div className={`flex-1 md:flex md:items-center ${isOpen ? 'block' : 'hidden'}`}>
+          <ul className="flex flex-col md:flex-row md:ml-auto">
+            <li className="md:ml-4 mt-2 md:mt-0">
+              <Link to="/Experience" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>
+                <FontAwesomeIcon icon={faBriefcase} className="mr-2" /> Experience
               </Link>
             </li>
-            <li>
-              <Link to="/ContactUs" onClick={toggleMenu}>
-                <FontAwesomeIcon icon={faEnvelope} className="fa-icon" /> Contact Us
+            <li className="md:ml-4 mt-2 md:mt-0">
+              <Link to="/ContactUs" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>
+                <FontAwesomeIcon icon={faEnvelope} className="mr-2" /> Contact Us
               </Link>
             </li>
-            {user ? ( // Check if user is authenticated
-              <li>
-                <Link to="/profile" onClick={toggleMenu}>
-                  {/* Render user's photo */}
-                  <div className="user-profile">
-                    <img src={user.photo} alt="User" />
-                  </div>
+            {user ? (
+              <li className="md:ml-4 mt-2 md:mt-0">
+                <Link to="/Profile" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>
+                  <FontAwesomeIcon icon={faUser} className="mr-2" /> Profile
                 </Link>
               </li>
             ) : (
-              <li>
-                <Link to="/Login" onClick={toggleMenu}>
-                  <FontAwesomeIcon icon={faSignInAlt} className="fa-icon" /> Login/Register
+              <li className="md:ml-4 mt-2 md:mt-0">
+                <Link to="/Login" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>
+                  <FontAwesomeIcon icon={faSignInAlt} className="mr-2" /> Login/Register
                 </Link>
               </li>
             )}
           </ul>
         </div>
-        <div className="navbar-toggle" onClick={toggleMenu}>
-          <FontAwesomeIcon icon={faBars} />
+        <div className="md:hidden" onClick={toggleMenu}>
+          <FontAwesomeIcon icon={faBars} className="text-gray-800" />
         </div>
       </div>
     </nav>
   );
 }
+
 export default Navbar;

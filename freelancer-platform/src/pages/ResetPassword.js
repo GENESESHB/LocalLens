@@ -37,33 +37,37 @@ export function ResetPassword() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
-        credentials: 'include', 
+        credentials: 'include',
       });
-      const data = await response.json();
 
       if (response.ok) {
+        const data = await response.json();
         setSuccessMessage(data.detail);
-        setLoading(false); 
-      } else {
         setLoading(false);
-        if (data.detail) {
-          setErrorMessage(data.detail);
-        } else if (data.non_field_errors) {
-          setErrorMessage(data.non_field_errors.join(', '));
+      } else {
+        if (response.status === 500) {
+          setErrorMessage('Internal server error');
         } else {
-          setErrorMessage(data.error || data.message || 'Login failed, Please try again.');
+          try {
+            const data = await response.json();
+            if (data.detail) {
+              setErrorMessage(data.detail);
+            } else if (data.non_field_errors) {
+              setErrorMessage(data.non_field_errors.join(', '));
+            } else {
+              setErrorMessage(data.error || data.message || 'An error occurred. Please try again.');
+            }
+          } catch (error) {
+            setErrorMessage('An error occurred. Please try again.');
+          }
         }
-  
+        setLoading(false);
       }
     } catch (error) {
       console.error('Error:', error);
-      setErrorMessage({ detail: 'An unexpected error occurred, please try again later.' });
-    } finally {
+      setErrorMessage('An unexpected error occurred, please try again later.');
       setLoading(false);
     }
-
-
-
   };
 
   const handleLoginRedirect = () => {
@@ -73,7 +77,7 @@ export function ResetPassword() {
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1539635278303-d4002c07eae3')" }}>
       <div className="relative bg-white bg-opacity-80 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center text-gray-800">Reset your password</h1>
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Reset your password</h1>
         {successMessage && (
           <p className="text-green-500 text-center mb-4">{successMessage}</p>
         )}
@@ -104,7 +108,7 @@ export function ResetPassword() {
             )}
           </button>
           <p className="mt-4 text-gray-600">
-          Already have an account ?{' '}
+            Already have an account?{' '}
             <span
               onClick={handleLoginRedirect}
               className="text-yellow-600 hover:text-yellow-700 cursor-pointer"
@@ -113,7 +117,6 @@ export function ResetPassword() {
             </span>
           </p>
         </form>
-
       </div>
     </div>
   );
