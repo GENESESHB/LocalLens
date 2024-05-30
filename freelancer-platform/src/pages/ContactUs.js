@@ -1,10 +1,14 @@
 // src/pages/ContactUs.js
 import React from 'react';
+import image1 from './assets/aboutimages/1.jpeg';
+import image2 from './assets/aboutimages/2.jpeg';
+import image3 from './assets/aboutimages/3.jpeg';
+import image4 from './assets/aboutimages/4.jpeg';
 
 function ContactUs() {
   return (
     <div className="bg-gray-100 min-h-screen">
-      <header className="bg-transparent text-white text-center py-6">
+      <header className="bg-blue-500 text-white text-center py-6">
         <h1 className="text-4xl font-bold">Experience Authentic Moroccan Hospitality</h1>
         <p className="text-xl mt-2">Stay with Local Families and Learn Traditional Culture</p>
       </header>
@@ -66,10 +70,10 @@ function ContactUs() {
         <section className="mt-16 bg-blue-500 p-6 rounded-lg shadow-lg text-center">
           <h2 className="text-3xl font-semibold text-red-600 mb-6">Why Choose Us?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-6">
-            <img src="your-why-choose-us-image-url-1.jpg" alt="Why Choose Us 1" className="w-full h-64 object-cover rounded-lg" />
-            <img src="your-why-choose-us-image-url-2.jpg" alt="Why Choose Us 2" className="w-full h-64 object-cover rounded-lg" />
-            <img src="your-why-choose-us-image-url-3.jpg" alt="Why Choose Us 3" className="w-full h-64 object-cover rounded-lg" />
-            <img src="your-why-choose-us-image-url-4.jpg" alt="Why Choose Us 4" className="w-full h-64 object-cover rounded-lg" />
+            <img src={image2} alt="Why Choose Us 1" className="w-full h-64 object-cover rounded-lg" />
+            <img src={image3} alt="Why Choose Us 2" className="w-full h-64 object-cover rounded-lg" />
+            <img src={image1} alt="Why Choose Us 2" className="w-full h-64 object-cover rounded-lg" />
+            <img src={image4} alt="Why Choose Us 4" className="w-full h-64 object-cover rounded-lg" />
           </div>
           <ul className="text-gray-700 text-lg list-disc list-inside">
             <li><span className="font-semibold">Authenticity:</span> Immerse yourself in the true essence of Moroccan culture, beyond typical tourist attractions.</li>
@@ -83,23 +87,32 @@ function ContactUs() {
         {/* Contact Us Section */}
         <section className="mt-16 text-center">
           <h2 className="text-3xl font-semibold text-gray-800 mb-6">Contact Us</h2>
-          <p className="text-lg text-gray-700">For more information and to book your stay, please visit our website at <a href="#" className="text-blue-600 underline">[Your Website]</a> or contact us at <a href="mailto:info@yourcompany.com" className="text-blue-600 underline">info@yourcompany.com</a>.</p>
+          <p className="text-lg text-gray-700">For more information and to book your stay, please visit our website at <a href="#" className="text-blue-600 underline">LocalLens</a> or contact us at <a href="mailto:suport@LocalLens.com" className="text-blue-600 underline"></a>suport@LocalLens.com</p>
           <p className="text-lg text-gray-700 mt-4">Experience Morocco like a local, with [Your Company Name]. Your home away from home awaits!</p>
         </section>
 
         {/* Image Section */}
         <section className="mt-16 text-center">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-6">Gallery</h2>
+          <h2 className="text-3xl font-semibold text-gray-800 mb-6"> Build By </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <img src="your-image-url-1.jpg" alt="Image 1" className="w-full h-64 object-cover rounded-lg shadow-lg" />
-            <img src="your-image-url-2.jpg" alt="Image 2" className="w-full h-64 object-cover rounded-lg shadow-lg" />
-            <img src="your-image-url-3.jpg" alt="Image 3" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+             <div className="relative">
+                 <img src="your-image-url-1.jpg" alt="Image 1" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+                 <p className="absolute bottom-0 left-0 w-full text-white rounded-lg bg-black bg-blue-500 py-2 px-4">Text at the bottom of Image 1</p>
+             </div>
+             <div className="relative">
+                 <img src="your-image-url-1.jpg" alt="Image 1" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+                 <p className="absolute bottom-0 left-0 w-full text-white bg-black rounded-lg bg-blue-500 py-2 px-4">Text at the bottom of Image 1</p>
+             </div>
+             <div className="relative">
+                 <img src="your-image-url-1.jpg" alt="Image 1" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+                 <p className="absolute bottom-0 left-0 w-full rounded-lg text-white bg-black  bg-blue-500 py-2 px-4">Text at the bottom of Image 1</p>
+             </div>
           </div>
         </section>
       </main>
 
       <footer className="bg-blue-800 text-white text-center py-6 mt-16">
-        <p>&copy; 2024 [Your Company Name]. All rights reserved.</p>
+        <p>&copy; 2024 LocalLens. All rights reserved.</p>
       </footer>
     </div>
   );
