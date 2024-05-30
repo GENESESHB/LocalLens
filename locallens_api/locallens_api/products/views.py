@@ -13,7 +13,7 @@ from .models import Product
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductUserSerializer
     permission_classes = [AllowAny]
 
     def get_permissions(self):
