@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { BACKEND_ENDPOINT } from '../constants';
 import { checkUserAuthentication } from '../authUtils';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import avatar from './assets/avatar.png';
 
 function ServiceDetails() {
   const { id } = useParams();
   const [service, setService] = useState(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const [showContactInfo, setShowContactInfo] = useState(false);
 
   useEffect(() => {
     fetchServiceDetails();
@@ -39,50 +42,48 @@ function ServiceDetails() {
   };
 
   return (
-    <main className="p-6 bg-gray-100">
-      <div className="container mx-auto p-6">
+    <main className="p-6 bg-gray-100 min-h-screen">
+      <div className="container mx-auto">
         {service ? (
-          <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden">
             <img className="w-full h-64 object-cover object-center" src={service.image} alt={service.name} />
-            <div className="p-6">
-              <h1 className="text-3xl font-bold text-gray-800 mb-4">{service.name}</h1>
-              <p className="text-gray-700 mb-4">{service.description}</p>
-              <div className="flex items-center justify-between mb-4">
-                <p className="text-2xl font-semibold text-gray-900">{service.price} DH</p>
-                <p className="text-gray-600">Stock: {service.stock}</p>
+            <div className="p-6 flex flex-col lg:flex-row">
+              <div className="lg:w-2/3 pr-6">
+                <h1 className="mb-4 text-5xl font-extrabold text-gray-900 md:text-5xl lg:text-6xl">{service.name}</h1>
+                <ReactMarkdown
+                  className="prose max-w-none mb-6"
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeRaw]}
+                >
+                  {service.description}
+                </ReactMarkdown>
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-3xl font-semibold text-green-600">{service.price} DH</p>
+                  {/* <p className="text-gray-600">Stock: {service.stock}</p> */}
+                </div>
               </div>
-              <div className="border-t pt-4">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2">Service Owner</h2>
-                <div className="flex items-center mb-4">
+              <div className="lg:w-1/3 lg:pl-6 lg:border-l border-gray-200">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Service Owner</h2>
+                <div className="flex flex-col sm:flex-row items-center mb-4">
                   <img
-                    src={service.user.profile_picture || 'https://via.placeholder.com/150'}
+                    src={service.user.profile_picture || avatar}
                     alt="Profile"
-                    className="w-16 h-16 rounded-full mr-4"
+                    className="w-16 h-16 rounded-full mr-4 object-cover"
                   />
-                  <div>
-                    <p className="text-gray-700 mb-1">Name: {service.user.name || 'N/A'}</p>
-                    <p className="text-gray-700 mb-1">Country: {service.user.country || 'N/A'}</p>
-                    <p className="text-gray-700 mb-1">City: {service.user.city || 'N/A'}</p>
+                  <div className="text-center sm:text-left mt-4 sm:mt-0">
+                    <p className="text-gray-700 font-semibold">Name: <span className="font-normal">{service.user.name || 'N/A'}</span></p>
+                    <p className="text-gray-700 font-semibold">Country: <span className="font-normal">{service.user.country || 'N/A'}</span></p>
+                    <p className="text-gray-700 font-semibold">City: <span className="font-normal">{service.user.city || 'N/A'}</span></p>
                   </div>
                 </div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Contact Information</h2>
                 {isUserLoggedIn ? (
-                  <div>
-                    {showContactInfo ? (
-                      <div>
-                        <p className="text-gray-700 mb-2">Email: {service.user.email}</p>
-                        <p className="text-gray-700 mb-2">Phone: {service.user.phone || 'N/A'}</p>
-                      </div>
-                    ) : (
-                      <button
-                        onClick={() => setShowContactInfo(true)}
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                      >
-                        Reveal Contact Information
-                      </button>
-                    )}
+                  <div className="bg-gray-50 p-4 rounded-md">
+                    <p className="text-gray-700 mb-2 font-semibold">Email: <span className="font-normal">{service.user.email}</span></p>
+                    <p className="text-gray-700 mb-2 font-semibold">Phone: <span className="font-normal">{service.user.phone || 'N/A'}</span></p>
                   </div>
                 ) : (
-                  <p className="text-red-500">Log in to see the owner's contact information</p>
+                  <p className="text-red-500 mt-4">Log in to see the owner's contact information</p>
                 )}
               </div>
             </div>
