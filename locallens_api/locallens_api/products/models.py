@@ -1,5 +1,8 @@
 from django.conf import settings
 from django.db import models
+from markdownfield.models import MarkdownField
+from markdownfield.models import RenderedMarkdownField
+from markdownfield.validators import VALIDATOR_STANDARD
 
 
 # Create your models here.
@@ -19,7 +22,12 @@ class Product(models.Model):
         blank=True,
         null=True,
     )
-    description = models.TextField()
+    heading = models.CharField(max_length=100, blank=True)
+    description = MarkdownField(
+        rendered_field="description_rendered",
+        validator=VALIDATOR_STANDARD,
+    )
+    description_rendered = RenderedMarkdownField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)

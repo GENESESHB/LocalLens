@@ -60,3 +60,16 @@ class UserSerializer(serializers.ModelSerializer[User]):
             "instagram_url",
             "role",
         ]
+
+
+class UserProductSerializer(serializers.ModelSerializer[User]):
+    class Meta:
+        model = User
+        fields = [
+            "name",
+            "email",
+            "phone",
+            "country",
+            "city",
+            "profile_picture",
+        ]

@@ -14,6 +14,7 @@ import Products from './pages/Products';
 import Experience from './pages/Experience';
 import ContactUs from './pages/ContactUs';
 import Navbar from './components/Navbar';
+import ServiceDetails from './pages/ServiceDetails';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/Register" element={<RegisterFreelancer />} /> 
           <Route path="/Reset" element={<ResetPassword />} /> 
           <Route path="/Reset/:token" element={<ResetPasswordConfirm />} />
+          <Route path="/service/:id" element={<ServiceDetails />} />
 
         </Routes>
       </div>

@@ -26,3 +26,4 @@ drf-spectacular==0.27.2  # https://github.com/tfranzel/drf-spectacular
 dj-rest-auth==6.0.0 # https://dj-rest-auth.readthedocs.io/en/stable/installation.html
 djangorestframework-simplejwt==5.3.1 # https://github.com/jazzband/djangorestframework-simplejwt
 requests==2.32.2
+django-markdownfield==0.11.0
