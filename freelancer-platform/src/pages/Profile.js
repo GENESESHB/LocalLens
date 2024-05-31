@@ -4,6 +4,7 @@ import { BACKEND_ENDPOINT } from '../constants';
 import { checkUserAuthentication } from '../authUtils';
 import { FaUser, FaEnvelope, FaPhone, FaGlobe, FaCity, FaCalendarAlt, FaLanguage, FaLinkedin, FaFacebook, FaInstagram, FaPen } from 'react-icons/fa';
 import './Profile.css';
+import avatar from './assets/avatar.png';
 
 function FreelancerProfile() {
   const [freelancer, setFreelancer] = useState({
@@ -123,10 +124,10 @@ function FreelancerProfile() {
     <div className="container mt-6 mx-auto p-6 items-center flex justify-center bg-gray-200">
       <div className="container bg-white shadow-md rounded-lg overflow-hidden">
         <div className="flex items-center justify-center mt-6">
-          <img src={freelancer.profile_picture} alt="Profile" className="w-32 h-32 rounded-full object-cover" />
+          <img src={freelancer.profile_picture || avatar} alt="Profile" className="w-32 h-32 rounded-full object-cover" />
         </div>
         <div className="p-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">{freelancer.name}</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">{freelancer.name || "N/A"}</h1>
           <p className="text-gray-600 text-center mb-6">{freelancer.bio}</p>
 
           <div className="flex justify-center space-x-4 mb-6">
