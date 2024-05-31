@@ -9,7 +9,7 @@ function ContactUs() {
   return (
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-transparent text-white text-center py-6">
-        <h1 className="text-4xl text-black font-bold">Experience Authentic Moroccan Hospitality</h1>
+        <h1 className="text-4xl text-black font-bold mt-6">Experience Authentic Moroccan Hospitality</h1>
         <p className="text-xl text-gray-800 mt-2">Stay with Local Families and Learn Traditional Culture</p>
       </header>
 
@@ -88,11 +88,11 @@ function ContactUs() {
         <section className="mt-16 text-center">
           <h2 className="text-3xl font-semibold text-gray-800 mb-6">Contact Us</h2>
           <p className="text-lg text-gray-700">For more information and to book your stay, please visit our website at <a href="#" className="text-blue-600 underline">LocalLens</a> or contact us at <a href="mailto:suport@LocalLens.com" className="text-blue-600 underline"></a>suport@LocalLens.com</p>
-          <p className="text-lg text-gray-700 mt-4">Experience Morocco like a local, with [Your Company Name]. Your home away from home awaits!</p>
+          <p className="text-lg text-gray-700 mt-4">Experience Morocco like a local, with LocalLens. Your home away from home awaits!</p>
         </section>
 
         {/* Image Section */}
-        <section className="mt-16 text-center">
+        {/* <section className="mt-16 text-center">
           <h2 className="text-3xl font-semibold text-gray-800 mb-6"> Build By </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
              <div className="relative">
@@ -108,7 +108,7 @@ function ContactUs() {
                  <p className="absolute bottom-0 left-0 w-full rounded-lg text-white bg-black  bg-blue-500 py-2 px-4">Text at the bottom of Image 1</p>
              </div>
           </div>
-        </section>
+        </section> */}
       </main>
 
       <footer className="bg-blue-800 text-white text-center py-6 mt-16">
