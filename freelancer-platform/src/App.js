@@ -15,31 +15,36 @@ import Experience from './pages/Experience';
 import ContactUs from './pages/ContactUs';
 import Navbar from './components/Navbar';
 import ServiceDetails from './pages/ServiceDetails';
+import MyServices from './pages/MyServices';
+import { UserProvider } from './UserContext';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Experience" element={<Experience />} />
-          <Route path="/Products" element={<Products />} />
-          <Route path="/Profile" element={<Profile />} />
-          <Route path="/Login" element={<LoginRegister />} />
-          <Route path="/ContactUs" element={<ContactUs />} />
-          <Route path="/PDetails" element={<PDetails />} />
-          <Route path="/Privacy" element={<Privacy />} />
-          <Route path="/Products" element={<Privacy />} />
-          <Route path="/Experience" element={<Experience />} />
-          <Route path="/Register" element={<RegisterFreelancer />} /> 
-          <Route path="/Reset" element={<ResetPassword />} /> 
-          <Route path="/Reset/:token" element={<ResetPasswordConfirm />} />
-          <Route path="/service/:id" element={<ServiceDetails />} />
+    <UserProvider>
+      <Router>
+        <div>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Experience" element={<Experience />} />
+            <Route path="/Products" element={<Products />} />
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/Login" element={<LoginRegister />} />
+            <Route path="/ContactUs" element={<ContactUs />} />
+            <Route path="/PDetails" element={<PDetails />} />
+            <Route path="/Privacy" element={<Privacy />} />
+            <Route path="/Products" element={<Privacy />} />
+            <Route path="/Experience" element={<Experience />} />
+            <Route path="/Register" element={<RegisterFreelancer />} /> 
+            <Route path="/Reset" element={<ResetPassword />} /> 
+            <Route path="/Reset/:token" element={<ResetPasswordConfirm />} />
+            <Route path="/service/:id" element={<ServiceDetails />} />
+            <Route path="/MyServices" element={<MyServices />} />
 
-        </Routes>
-      </div>
-    </Router>
+          </Routes>
+        </div>
+      </Router>
+    </UserProvider>
   );
 }
 

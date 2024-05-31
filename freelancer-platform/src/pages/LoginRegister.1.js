@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+// src/components/LoginRegister.js
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND_ENDPOINT } from '../constants';
+import { UserContext } from '../UserContext';
 
 export function LoginRegister() {
   const [email, setEmail] = useState('');
@@ -8,6 +10,7 @@ export function LoginRegister() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   useEffect(() => {
     const checkUserConnection = async () => {
@@ -41,10 +44,11 @@ export function LoginRegister() {
     const data = await response.json();
 
     if (response.ok) {
-      setLoading(false); 
+      setLoading(false);
+      setUser(data.user);
       navigate('/');
     } else {
-      setLoading(false); 
+      setLoading(false);
       if (data.detail) {
         setErrorMessage(data.detail);
       } else if (data.non_field_errors) {
@@ -118,7 +122,6 @@ export function LoginRegister() {
             </span>
           </p>
         </form>
-
       </div>
     </div>
   );

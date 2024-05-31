@@ -43,7 +43,7 @@ function ServiceDetails() {
 
   return (
     <main className="p-6 bg-gray-100 min-h-screen">
-      <div className="container mx-auto">
+      <div className="container mt-6 mx-auto">
         {service ? (
           <div className="bg-white shadow-lg rounded-lg overflow-hidden">
             <img className="w-full h-64 object-cover object-center" src={service.image} alt={service.name} />

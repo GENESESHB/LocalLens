@@ -1,41 +1,68 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BACKEND_ENDPOINT } from '../constants';
+import { checkUserAuthentication } from '../authUtils';
+import { FaUser, FaEnvelope, FaPhone, FaGlobe, FaCity, FaCalendarAlt, FaLanguage, FaLinkedin, FaFacebook, FaInstagram, FaPen } from 'react-icons/fa';
 import './Profile.css';
 
 function FreelancerProfile() {
   const [freelancer, setFreelancer] = useState({
-    id: 1, // Assuming freelancer ID is 1 for this example
-    firstName: '',
-    familyName: '',
-    phoneNumber: '',
+    name: '',
+    email: '',
+    phone: '',
+    country: '',
     city: '',
-    services: []
+    profile_picture: '',
+    bio: '',
+    date_of_birth: null,
+    languages_spoken: '',
+    linkedin_url: '',
+    facebook_url: '',
+    instagram_url: '',
+    role: ''
   });
-  const [isPersonalInfoVisible, setIsPersonalInfoVisible] = useState(false);
-  const [isServicesVisible, setIsServicesVisible] = useState(false);
-  const [isProfileVisible, setIsProfileVisible] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchUserData();
+    authenticateUser();
+    // fetchUserData();
   }, []);
+
+  const authenticateUser = async () => {
+    try {
+      const userData = await checkUserAuthentication();
+      if (userData) {
+        setFreelancer(userData);
+      }
+    } catch (error) {
+      navigate('/Login');    }
+  };
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch(BACKEND_ENDPOINT + "api/users/me/",{
+      const response = await fetch(BACKEND_ENDPOINT + "api/users/me/", {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', 
+        credentials: 'include',
       });
-      if (!response.ok) {
-        throw new Error('Failed to fetch freelancer data');
+
+      if (response.status !== 200) {
+        navigate('/Login');
+        return;
       }
+
       const data = await response.json();
       setFreelancer(data);
     } catch (error) {
       console.error('Error fetching freelancer data:', error);
-      // Handle error, e.g., display a message to the user
+      navigate('/Login');
     }
   };
 
@@ -47,220 +74,258 @@ function FreelancerProfile() {
     });
   };
 
-  const handleServiceInputChange = (index, e) => {
-    const { name, value } = e.target;
-    const updatedServices = [...freelancer.services];
-    updatedServices[index][name] = value;
-    setFreelancer({ ...freelancer, services: updatedServices });
-  };
-
-  const handleServiceImageChange = (index, e) => {
-    const { name, files } = e.target;
-    const fileArray = Array.from(files).map(file => URL.createObjectURL(file));
-    const updatedServices = [...freelancer.services];
-    updatedServices[index][name] = fileArray;
-    setFreelancer({ ...freelancer, services: updatedServices });
-  };
-
-  const handleAddService = () => {
-    setFreelancer({
-      ...freelancer,
-      services: [...freelancer.services, { stateName: '', stateImages: [], cityName: '', cityImages: [], cultureName: '', cultureImages: [] }]
-    });
-  };
-
-  const handleDeleteService = (index) => {
-    const updatedServices = [...freelancer.services];
-    updatedServices.splice(index, 1);
-    setFreelancer({ ...freelancer, services: updatedServices });
+  const handleProfilePictureChange = (e) => {
+    setProfilePicture(e.target.files[0]);
   };
 
   const handleSaveProfile = async () => {
+    const formData = new FormData();
+    formData.append('name', freelancer.name);
+    formData.append('phone', freelancer.phone);
+    formData.append('country', freelancer.country);
+    formData.append('city', freelancer.city);
+    formData.append('bio', freelancer.bio);
+    formData.append('date_of_birth', freelancer.date_of_birth);
+    formData.append('languages_spoken', freelancer.languages_spoken);
+    formData.append('linkedin_url', freelancer.linkedin_url);
+    formData.append('facebook_url', freelancer.facebook_url);
+    formData.append('instagram_url', freelancer.instagram_url);
+    if (profilePicture) {
+      formData.append('profile_picture', profilePicture);
+    }
+
     try {
-      // Save personal information
-      const personalInfoResponse = await fetch(`http://localhost:8000/api/freelancer/${freelancer.id}/`, {
+      const response = await fetch(BACKEND_ENDPOINT + `api/users/update-information/`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
-        body: JSON.stringify({
-          firstName: freelancer.firstName,
-          familyName: freelancer.familyName,
-          phoneNumber: freelancer.phoneNumber,
-          city: freelancer.city,
-        }),
+        body: formData,
+        credentials: 'include',
       });
 
-      if (!personalInfoResponse.ok) {
-        throw new Error('Failed to update personal information.');
+      if (!response.ok) {
+        throw new Error('Failed to update profile.');
       }
 
-      // Save services
-      const servicesResponse = await fetch('http://localhost:8000/api/services/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(freelancer.services),
-      });
-
-      if (!servicesResponse.ok) {
-        throw new Error('Failed to save services.');
-      }
-
-      alert('Profile updated successfully!');
+      // alert('Profile updated successfully!');
+      setEditMode(false);
+      fetchUserData();
+      setSuccessMessage('Profile updated successfully.'); 
     } catch (error) {
       console.error('Error saving profile:', error);
-      alert('Failed to update profile.');
+      setErrorMessage('Failed to update profile.');
+      // alert('Failed to update profile.');
     }
   };
 
   return (
-    <div className="FP">
-      <div className="card-container">
-        <div className="card1">
-          <h2 onClick={() => setIsPersonalInfoVisible(!isPersonalInfoVisible)}>Personal Information</h2>
-          {isPersonalInfoVisible && (
-            <div className="personal-info">
-              <label>First Name:</label>
-              <input
-                type="text"
-                name="firstName"
-                value={freelancer.firstName}
-                onChange={handleInputChange}
-              />
-              <label>Family Name:</label>
-              <input
-                type="text"
-                name="familyName"
-                value={freelancer.familyName}
-                onChange={handleInputChange}
-              />
-              <label>Phone Number:</label>
-              <input
-                type="tel"
-                name="phoneNumber"
-                value={freelancer.phoneNumber}
-                onChange={handleInputChange}
-              />
-              <label>City:</label>
-              <input
-                type="text"
-                name="city"
-                value={freelancer.city}
-                onChange={handleInputChange}
-              />
-              <button onClick={handleSaveProfile}>Save Profile</button>
-            </div>
-          )}
+    <div className="container mt-6 mx-auto p-6 items-center flex justify-center bg-gray-200">
+      <div className="container bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="flex items-center justify-center mt-6">
+          <img src={freelancer.profile_picture} alt="Profile" className="w-32 h-32 rounded-full object-cover" />
         </div>
+        <div className="p-6">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2 text-center">{freelancer.name}</h1>
+          <p className="text-gray-600 text-center mb-6">{freelancer.bio}</p>
 
-        <div className="card2">
-          <h2 onClick={() => setIsServicesVisible(!isServicesVisible)}>Services</h2>
-          {isServicesVisible && (
-            <div className="services">
-              {freelancer.services.map((service, index) => (
-                <div key={index} className="service-card">
-                  <label>State Name:</label>
-                  <input
-                    type="text"
-                    name="stateName"
-                    value={service.stateName}
-                    onChange={(e) => handleServiceInputChange(index, e)}
-                  />
-                  <label>State Images:</label>
-                  <input
-                    type="file"
-                    name="stateImages"
-                    multiple
-                    onChange={(e) => handleServiceImageChange(index, e)}
-                  />
-                  <div className="image-preview">
-                    {service.stateImages.map((src, i) => (
-                      <img key={i} src={src} alt={`State ${i}`} width="100" />
-                    ))}
-                  </div>
+          <div className="flex justify-center space-x-4 mb-6">
+            {freelancer.linkedin_url && (
+              <a href={freelancer.linkedin_url} className="text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer">
+                <FaLinkedin size={24} />
+              </a>
+            )}
+            {freelancer.facebook_url && (
+              <a href={freelancer.facebook_url} className="text-blue-700 hover:text-blue-900" target="_blank" rel="noopener noreferrer">
+                <FaFacebook size={24} />
+              </a>
+            )}
+            {freelancer.instagram_url && (
+              <a href={freelancer.instagram_url} className="text-pink-600 hover:text-pink-800" target="_blank" rel="noopener noreferrer">
+                <FaInstagram size={24} />
+              </a>
+            )}
+          </div>
 
-                  <label>City Name:</label>
-                  <input
-                    type="text"
-                    name="cityName"
-                    value={service.cityName}
-                    onChange={(e) => handleServiceInputChange(index, e)}
-                  />
-                  <label>City Images:</label>
-                  <input
-                    type="file"
-                    name="cityImages"
-                    multiple
-                    onChange={(e) => handleServiceImageChange(index, e)}
-                  />
-                  <div className="image-preview">
-                    {service.cityImages.map((src, i) => (
-                      <img key={i} src={src} alt={`City ${i}`} width="100" />
-                    ))}
-                  </div>
-
-                  <label>Culture Name:</label>
-                  <input
-                    type="text"
-                    name="cultureName"
-                    value={service.cultureName}
-                    onChange={(e) => handleServiceInputChange(index, e)}
-                  />
-                  <label>Culture Images:</label>
-                  <input
-                    type="file"
-                    name="cultureImages"
-                    multiple
-                    onChange={(e) => handleServiceImageChange(index, e)}
-                  />
-                  <div className="image-preview">
-                    {service.cultureImages.map((src, i) => (
-                      <img key={i} src={src} alt={`Culture ${i}`} width="100" />
-                    ))}
-                  </div>
-
-                  <button onClick={() => handleDeleteService(index)}>Delete Service</button>
-                </div>
-              ))}
-              <button onClick={handleAddService}>Add Service</button>
-              <button onClick={handleSaveProfile}>Save Services</button>
-            </div>
+          <hr className='mb-6' />
+          {errorMessage && (
+            <p className="text-red-500 text-center mb-4">{errorMessage}</p>
           )}
-        </div>
-
-        <div className="card3">
-          <h2 onClick={() => setIsProfileVisible(!isProfileVisible)}>Profile</h2>
-          {isProfileVisible && (
-            <div className="profile-info">
-              <h3>{freelancer.firstName} {freelancer.familyName}</h3>
-              <p>Phone: {freelancer.phoneNumber}</p>
-              <p>City: {freelancer.city}</p>
-              {freelancer.services.map((service, index) => (
-                <div key={index} className="service-profile">
-                  <h4>Service {index + 1}</h4>
-                  <p>State: {service.stateName}</p>
-                  <div className="image-preview">
-                    {service.stateImages.map((src, i) => (
-                      <img key={i} src={src} alt={`State ${i}`} width="100" />
-                    ))}
-                  </div>
-                  <p>City: {service.cityName}</p>
-                  <div className="image-preview">
-                    {service.cityImages.map((src, i) => (
-                      <img key={i} src={src} alt={`City ${i}`} width="100" />
-                    ))}
-                  </div>
-                  <p>Culture: {service.cultureName}</p>
-                  <div className="image-preview">
-                    {service.cultureImages.map((src, i) => (
-                      <img key={i} src={src} alt={`Culture ${i}`} width="100" />
-                    ))}
-                  </div>
+          {successMessage && (
+            <p className="text-green-500 text-center mb-4">{successMessage}</p>
+          )}
+          {!editMode ? (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <p className="text-gray-700 flex items-center"><FaEnvelope className="mr-2" /> <strong>Email:</strong> {freelancer.email}</p>
                 </div>
-              ))}
+                <div>
+                  <p className="text-gray-700 flex items-center"><FaPhone className="mr-2" /> <strong>Phone:</strong> {freelancer.phone}</p>
+                </div>
+                <div>
+                  <p className="text-gray-700 flex items-center"><FaGlobe className="mr-2" /> <strong>Country:</strong> {freelancer.country}</p>
+                </div>
+                <div>
+                  <p className="text-gray-700 flex items-center"><FaCity className="mr-2" /> <strong>City:</strong> {freelancer.city}</p>
+                </div>
+                <div>
+                  <p className="text-gray-700 flex items-center"><FaCalendarAlt className="mr-2" /> <strong>Date of Birth:</strong> {freelancer.date_of_birth || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-gray-700 flex items-center"><FaLanguage className="mr-2" /> <strong>Languages Spoken:</strong> {freelancer.languages_spoken}</p>
+                </div>
+              </div>
+              <div className="flex justify-center mt-6">
+                <button
+                  type="button"
+                  onClick={() => setEditMode(true)}
+                  className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center"
+                >
+                  <FaPen className="mr-2" /> Update Information
+                </button>
+              </div>
             </div>
+          ) : (
+            <form className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaUser className="mr-2" /> Name:</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={freelancer.name}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaEnvelope className="mr-2" /> Email:</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={freelancer.email}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled // Disable the email field
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaPhone className="mr-2" /> Phone:</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={freelancer.phone}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaGlobe className="mr-2" /> Country:</label>
+                  <input
+                    type="text"
+                    name="country"
+                    value={freelancer.country}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaCity className="mr-2" /> City:</label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={freelancer.city}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaPen className="mr-2" /> Bio:</label>
+                  <textarea
+                    name="bio"
+                    value={freelancer.bio}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaCalendarAlt className="mr-2" /> Date of Birth:</label>
+                  <input
+                    type="date"
+                    name="date_of_birth"
+                    value={freelancer.date_of_birth || ''}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaLanguage className="mr-2" /> Languages Spoken:</label>
+                  <input
+                    type="text"
+                    name="languages_spoken"
+                    value={freelancer.languages_spoken}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaLinkedin className="mr-2" /> LinkedIn URL:</label>
+                  <input
+                    type="url"
+                    name="linkedin_url"
+                    value={freelancer.linkedin_url}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaFacebook className="mr-2" /> Facebook URL:</label>
+                  <input
+                    type="url"
+                    name="facebook_url"
+                    value={freelancer.facebook_url}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaInstagram className="mr-2" /> Instagram URL:</label>
+                  <input
+                    type="url"
+                    name="instagram_url"
+                    value={freelancer.instagram_url}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 flex items-center"><FaPen className="mr-2" /> Profile Picture:</label>
+                  <input
+                    type="file"
+                    name="profile_picture"
+                    onChange={handleProfilePictureChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+              <div className="flex justify-center mt-6 space-x-4">
+                <button
+                  type="button"
+                  onClick={handleSaveProfile}
+                  className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  Save Profile
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditMode(false)}
+                  className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           )}
         </div>
       </div>
@@ -269,4 +334,3 @@ function FreelancerProfile() {
 }
 
 export default FreelancerProfile;
-

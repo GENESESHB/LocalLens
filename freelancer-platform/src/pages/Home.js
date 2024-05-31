@@ -37,7 +37,10 @@ function Home() {
         <h1 className="text-center text text-2xl font-bold">Available Services</h1>
         <SearchBar />
       </header> */}
-      <main className="p-6 bg-gray-100 h-full">
+      <main className="p-6 h-full">
+      {services.length === 0 ? (
+          <p className="text-center text-gray-600">Nothing to show</p>
+        ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
           {services.map((service) => (
             <div key={service.id} className="transform overflow-hidden rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg">
@@ -58,6 +61,7 @@ function Home() {
             </div>
           ))}
         </div>
+        )}
         <div className="fter:h-px mt-5 flex items-center before:h-px before:flex-1  before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300  after:content-['']">
           
           {nextPage && (

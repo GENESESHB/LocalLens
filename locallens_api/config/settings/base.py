@@ -146,7 +146,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "locallens_api.middleware.DisableSessionMiddleware",
+    # "locallens_api.middleware.DisableSessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -163,6 +163,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React frontend URL
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    # Add other trusted origins if needed
+]
 CORS_ALLOW_CREDENTIALS = True
 
 # STATIC
@@ -351,8 +355,8 @@ SOCIALACCOUNT_FORMS = {"signup": "locallens_api.users.forms.UserSocialSignupForm
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+        # "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",

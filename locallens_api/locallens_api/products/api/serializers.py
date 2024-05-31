@@ -15,7 +15,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "heading",
             "description",
             "price",
-            "stock",
+            # "stock",
             "created_at",
             "updated_at",
         ]
@@ -35,7 +35,7 @@ class ProductUserSerializer(serializers.ModelSerializer):
             "description",
             "description_rendered",
             "price",
-            "stock",
+            # "stock",
             "created_at",
             "updated_at",
         ]

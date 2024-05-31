@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from .api.serializers import ProductSerializer
 from .api.serializers import ProductUserSerializer
 from .models import Product
+from .permissions import IsOwner
 
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
@@ -39,6 +40,7 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
             "user": request.user.id,
             "name": data.get("name"),
             "image": request.FILES["image"],
+            "heading": data.get("heading"),
             "description": data.get("description"),
             "price": data.get("price"),
             "stock": data.get("stock"),
@@ -54,3 +56,10 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
 class ProductRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductUserSerializer
+
+    def get_permissions(self):
+        if self.request.method in ["PUT", "PATCH", "DELETE"]:
+            self.permission_classes = [IsAuthenticated, IsOwner]
+        else:
+            self.permission_classes = [AllowAny]
+        return super().get_permissions()
