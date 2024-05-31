@@ -20,7 +20,6 @@ from locallens_api.products.models import Product
 from locallens_api.users.models import PasswordResetToken
 from locallens_api.users.models import User
 
-from .permissions import IsSuperuserOrSelf
 from .serializers import PasswordResetConfirmSerializer
 from .serializers import PasswordResetRequestSerializer
 from .serializers import UserSerializer
@@ -97,7 +96,7 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = "pk"
-    permission_classes = [IsAuthenticated, IsSuperuserOrSelf]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self, *args, **kwargs):
         assert isinstance(self.request.user.id, int)
