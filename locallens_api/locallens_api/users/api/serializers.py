@@ -60,6 +60,11 @@ class UserSerializer(serializers.ModelSerializer[User]):
             "instagram_url",
             "role",
         ]
+        read_only_fields = ["email"]
+
+    def update(self, instance, validated_data):
+        validated_data.pop("email", None)
+        return super().update(instance, validated_data)
 
 
 class UserProductSerializer(serializers.ModelSerializer[User]):

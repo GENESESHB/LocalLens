@@ -5,8 +5,8 @@ function ContactUs() {
   return (
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-transparent text-white text-center py-6">
-        <h1 className="text-4xl font-bold">Experience Authentic Moroccan Hospitality</h1>
-        <p className="text-xl mt-2">Stay with Local Families and Learn Traditional Culture</p>
+        <h1 className="text-4xl text-black font-bold">Experience Authentic Moroccan Hospitality</h1>
+        <p className="text-xl text-gray-800 mt-2">Stay with Local Families and Learn Traditional Culture</p>
       </header>
 
       <main className="max-w-7xl mx-auto p-6">
