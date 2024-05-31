@@ -30,6 +30,7 @@ function MyServices() {
     price: '',
   });
   const [selectedTab, setSelectedTab] = useState('write');
+  const [fieldErrors, setFieldErrors] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -143,7 +144,10 @@ function MyServices() {
           description: '',
           price: '',
         });
+        setFieldErrors({});
       } else {
+        const errorData = await response.json();
+        setFieldErrors(errorData);
         console.error('Failed to create new service');
       }
     } catch (error) {
@@ -157,7 +161,7 @@ function MyServices() {
         <h1 className="text-2xl font-bold">My Services</h1>
         <button
           onClick={handleAddService}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
         >
           Add New Service
         </button>
@@ -217,9 +221,9 @@ function MyServices() {
         overlayClassName="modal-overlay"
         style={{
           content: {
-            width: '80%', // Set the width to 80% of the parent element
-            maxWidth: '800px', // Set the maximum width to 800px
-            margin: '0 auto', // Center the modal horizontally
+            width: '80%',
+            maxWidth: '900px',
+            margin: '0 auto',
           },
         }}
       >
@@ -228,6 +232,7 @@ function MyServices() {
           <div>
             <label className="block text-gray-700">Name:</label>
             <input
+              placeholder='Please enter the name of the service'
               type="text"
               name="name"
               value={newService.name}
@@ -235,9 +240,12 @@ function MyServices() {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+            {fieldErrors.name && (
+              <p className="text-red-500 text-sm">{fieldErrors.name}</p>
+            )}
           </div>
           <div>
-            <label className="block text-gray-700">Image:</label>
+            <label className="block text-gray-700">Cover Image:</label>
             <input
               type="file"
               name="image"
@@ -245,16 +253,23 @@ function MyServices() {
               className="block w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+            {fieldErrors.image && (
+              <p className="text-red-500 text-sm">{fieldErrors.image}</p>
+            )}
           </div>
           <div>
             <label className="block text-gray-700">Heading:</label>
             <input
+              placeholder='Please enter a heading for the service'
               type="text"
               name="heading"
               value={newService.heading}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            {fieldErrors.heading && (
+              <p className="text-red-500 text-sm">{fieldErrors.heading}</p>
+            )}
           </div>
           <div>
             <label className="block text-gray-700">Description:</label>
@@ -269,10 +284,14 @@ function MyServices() {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+            {fieldErrors.description && (
+              <p className="text-red-500 text-sm">{fieldErrors.description}</p>
+            )}
           </div>
           <div>
             <label className="block text-gray-700">Price:</label>
             <input
+              placeholder='Please enter the price of the service'
               type="number"
               name="price"
               value={newService.price}
@@ -280,11 +299,14 @@ function MyServices() {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+            {fieldErrors.price && (
+              <p className="text-red-500 text-sm">{fieldErrors.price}</p>
+            )}
           </div>
           <div className="flex justify-end space-x-4">
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
             >
               Save
             </button>

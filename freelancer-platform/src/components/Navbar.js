@@ -52,7 +52,7 @@ function Navbar() {
               </Link>
             </li> */}
             <li className="md:ml-4 mt-2 md:mt-0">
-              <Link to="/ContactUs" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>
+              <Link to="/AboutUs" className="text-gray-800 hover:text-gray-600" onClick={toggleMenu}>
                 <FontAwesomeIcon icon={faInfoCircle} className="mr-2" /> About Us
               </Link>
             </li>

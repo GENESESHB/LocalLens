@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+input {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  width: 100%;
+  padding: unset;
+}
 .modal-overlay {
   position: fixed;
   top: 0;
