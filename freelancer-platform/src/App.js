@@ -15,6 +15,7 @@ import Experience from './pages/Experience';
 import ContactUs from './pages/ContactUs';
 import Navbar from './components/Navbar';
 import ServiceDetails from './pages/ServiceDetails';
+import MyServices from './pages/MyServices';
 import { UserProvider } from './UserContext';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="/Reset" element={<ResetPassword />} /> 
             <Route path="/Reset/:token" element={<ResetPasswordConfirm />} />
             <Route path="/service/:id" element={<ServiceDetails />} />
+            <Route path="/MyServices" element={<MyServices />} />
 
           </Routes>
         </div>

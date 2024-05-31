@@ -15,6 +15,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 
+from locallens_api.products.api.serializers import ProductSerializer
+from locallens_api.products.models import Product
 from locallens_api.users.models import PasswordResetToken
 from locallens_api.users.models import User
 
@@ -119,3 +121,15 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
             serializer.save()
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+
+    @action(
+        detail=False,
+        methods=["get"],
+        url_path="my-products",
+        url_name="my_products",
+    )
+    def my_products(self, request):
+        user = request.user
+        products = Product.objects.filter(user=user)
+        serializer = ProductSerializer(products, many=True)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
