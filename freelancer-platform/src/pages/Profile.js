@@ -25,13 +25,13 @@ function FreelancerProfile() {
   const [editMode, setEditMode] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-
   const [successMessage, setSuccessMessage] = useState('');
+  const [fieldErrors, setFieldErrors] = useState({});
+
   const navigate = useNavigate();
 
   useEffect(() => {
     authenticateUser();
-    // fetchUserData();
   }, []);
 
   const authenticateUser = async () => {
@@ -41,7 +41,8 @@ function FreelancerProfile() {
         setFreelancer(userData);
       }
     } catch (error) {
-      navigate('/Login');    }
+      navigate('/Login');
+    }
   };
 
   const fetchUserData = async () => {
@@ -106,17 +107,20 @@ function FreelancerProfile() {
       });
 
       if (!response.ok) {
+        const errorData = await response.json();
+        setFieldErrors(errorData);
         throw new Error('Failed to update profile.');
+      } else {
+        setErrorMessage('');
       }
 
-      // alert('Profile updated successfully!');
       setEditMode(false);
       fetchUserData();
-      setSuccessMessage('Profile updated successfully.'); 
+      setSuccessMessage('Profile updated successfully.');
+      setFieldErrors({});
     } catch (error) {
       console.error('Error saving profile:', error);
       setErrorMessage('Failed to update profile.');
-      // alert('Failed to update profile.');
     }
   };
 
@@ -199,6 +203,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.name && (
+                    <p className="text-red-500 text-sm">{fieldErrors.name}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaEnvelope className="mr-2" /> Email:</label>
@@ -210,6 +217,9 @@ function FreelancerProfile() {
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     disabled // Disable the email field
                   />
+                  {fieldErrors.email && (
+                    <p className="text-red-500 text-sm">{fieldErrors.email}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaPhone className="mr-2" /> Phone:</label>
@@ -220,6 +230,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.phone && (
+                    <p className="text-red-500 text-sm">{fieldErrors.phone}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaGlobe className="mr-2" /> Country:</label>
@@ -230,6 +243,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.country && (
+                    <p className="text-red-500 text-sm">{fieldErrors.country}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaCity className="mr-2" /> City:</label>
@@ -240,6 +256,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.city && (
+                    <p className="text-red-500 text-sm">{fieldErrors.city}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaPen className="mr-2" /> Bio:</label>
@@ -249,6 +268,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.bio && (
+                    <p className="text-red-500 text-sm">{fieldErrors.bio}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaCalendarAlt className="mr-2" /> Date of Birth:</label>
@@ -259,6 +281,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.date_of_birth && (
+                    <p className="text-red-500 text-sm">{fieldErrors.date_of_birth}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaLanguage className="mr-2" /> Languages Spoken:</label>
@@ -269,6 +294,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.languages_spoken && (
+                    <p className="text-red-500 text-sm">{fieldErrors.languages_spoken}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaLinkedin className="mr-2" /> LinkedIn URL:</label>
@@ -279,6 +307,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.linkedin_url && (
+                    <p className="text-red-500 text-sm">{fieldErrors.linkedin_url}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaFacebook className="mr-2" /> Facebook URL:</label>
@@ -289,6 +320,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.facebook_url && (
+                    <p className="text-red-500 text-sm">{fieldErrors.facebook_url}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaInstagram className="mr-2" /> Instagram URL:</label>
@@ -299,6 +333,9 @@ function FreelancerProfile() {
                     onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.instagram_url && (
+                    <p className="text-red-500 text-sm">{fieldErrors.instagram_url}</p>
+                  )}
                 </div>
                 <div>
                   <label className="block text-gray-700 flex items-center"><FaPen className="mr-2" /> Profile Picture:</label>
@@ -308,6 +345,9 @@ function FreelancerProfile() {
                     onChange={handleProfilePictureChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                  {fieldErrors.profile_picture && (
+                    <p className="text-red-500 text-sm">{fieldErrors.profile_picture}</p>
+                  )}
                 </div>
               </div>
               <div className="flex justify-center mt-6 space-x-4">
