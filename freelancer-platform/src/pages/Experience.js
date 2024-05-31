@@ -66,8 +66,6 @@ function Experience() {
         <div className="flex justify-center mt-8">
           <img src="https://th.bing.com/th/id/R.b70b1087a31f2610161cf7323875290d?rik=OxhWyjUUHzspag&pid=ImgRaw&r=0" alt="Amazigh Culture 1" className="w-32 h-32 object-cover rounded-full mx-2" />
           <img src="https://th.bing.com/th/id/R.becc7c23550b917ade28347493ca1cdf?rik=c83D%2fXCWXLSmIg&pid=ImgRaw&r=0" alt="Amazigh Culture 2" className="w-32 h-32 object-cover rounded-full mx-2" />
-          <img src="https://th.bing.com/th/id/R.bfed8829143f95f6afc9a9f6b9b1a1ba?rik=MCUaekALOqqhBg&pid=ImgRaw&r=0" alt="Amazigh Culture 3" className="w-32 h-32 object-cover rounded-full mx-2" />
-          <img src="https://th.bing.com/th/id/R.2470458a41aebbbc5277805df717edf9?rik=k51wLAeBu5Voig&pid=ImgRaw&r=0" alt="Amazigh Culture 4" className="w-32 h-32 object-cover rounded-full mx-2" />
         </div>
       </header>
       <div className="flex flex-wrap justify-center">

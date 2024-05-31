@@ -26,7 +26,8 @@ function MyServices() {
         // setFreelancer(userData);
       }
     } catch (error) {
-      navigate('/Login');    }
+      navigate('/Login');
+    }
   };
 
   const fetchServices = async (url) => {
